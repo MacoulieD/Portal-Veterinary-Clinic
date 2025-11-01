@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Perfil - CliniVet</title>
+    <link rel="icon" href="img/Logo.jpeg" type="jpeg" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="Styles_Boos.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+     <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header text-white">
+        <div class="user-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <h5 class="mb-1 fw-bold" id="userName">Usuario Demo</h5>
+        <small id="userEmail" class="text-white-50">demo@clinivet.com</small>
+      </div>
+
+      <nav class="sidebar-menu">
+        <a href="#" class="nav-link active" onclick="cambiarSeccion(event, 'dashboard')">
+          <i class="fas fa-home"></i> Inicio
+        </a>
+        <a href="#" class="nav-link" onclick="cambiarSeccion(event, 'mascotas')">
+          <i class="fas fa-paw"></i> Mis Mascotas
+        </a>
+        <a href="#" class="nav-link" onclick="cambiarSeccion(event, 'citas')">
+          <i class="fas fa-calendar-check"></i> Mis Citas
+        </a>
+        <a href="#" class="nav-link" onclick="cambiarSeccion(event, 'agendar')">
+          <i class="fas fa-plus-circle"></i> Agendar Cita
+        </a>
+        <a href="#" class="nav-link" onclick="cambiarSeccion(event, 'historial')">
+          <i class="fas fa-file-medical"></i> Historial Médico
+        </a>
+        <a href="#" class="nav-link" onclick="cambiarSeccion(event, 'perfil')">
+          <i class="fas fa-user-circle"></i> Mi Perfil
+        </a>
+        <hr class="text-white-50 mx-3" />
+        <a href="#" class="nav-link text-danger" onclick="cerrarSesion()">
+          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+      </nav>
+    </div>
+
+    <!-- Botón móvil -->
+    <button class="mobile-toggle d-lg-none" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Top Bar -->
+      <div class="top-bar d-flex justify-content-between align-items-center">
+        <div>
+          <h2 class="mb-1 fw-bold">
+            Bienvenido,
+            <span id="welcomeName" style="color: var(--verde-principal)">Usuario</span>
+            👋
+          </h2>
+          <small class="text-muted">
+            <i class="fas fa-calendar me-2"></i><span id="fechaHoy"></span>
+          </small>
+        </div>
+        <button class="btn btn-outline-danger d-none d-lg-block" onclick="cerrarSesion()">
+          <i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión
+        </button>
+      </div>
+
+      <!-- SECCIÓN: DASHBOARD -->
+      <div class="section-content active" id="dashboard-section">
+        <div class="row g-4 mb-4">
+          <div class="col-lg-3 col-md-6">
+            <div class="stat-card text-center">
+              <i class="fas fa-paw" style="color: var(--verde-principal)"></i>
+              <div class="stat-number" id="totalMascotas">0</div>
+              <p class="text-muted mb-0 fw-semibold">Mascotas</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="stat-card text-center">
+              <i class="fas fa-calendar-alt" style="color: #17a2b8"></i>
+              <div class="stat-number" id="totalCitas">0</div>
+              <p class="text-muted mb-0 fw-semibold">Citas</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="stat-card text-center">
+              <i class="fas fa-clock" style="color: #ffc107"></i>
+              <div class="stat-number" id="citasPendientes">0</div>
+              <p class="text-muted mb-0 fw-semibold">Pendientes</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="stat-card text-center">
+              <i class="fas fa-file-medical" style="color: #dc3545"></i>
+              <div class="stat-number" id="totalHistoriales">0</div>
+              <p class="text-muted mb-0 fw-semibold">Historiales</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="custom-card">
+          <div class="custom-card-header">
+            <h4 class="mb-0 fw-bold">
+              <i class="fas fa-calendar-check me-2" style="color: var(--verde-principal)"></i>
+              Próximas Citas
+            </h4>
+          </div>
+          <div id="proximasCitasList"></div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN: MIS MASCOTAS -->
+      <div class="section-content" id="mascotas-section">
+        <div class="custom-card">
+          <div class="custom-card-header d-flex justify-content-between align-items-center">
+            <h4 class="mb-0 fw-bold">
+              <i class="fas fa-paw me-2" style="color: var(--verde-principal)"></i>
+              Mis Mascotas
+            </h4>
+            <button class="btn btn-secondary-custom" data-bs-toggle="modal" data-bs-target="#addPetModal">
+              <i class="fas fa-plus me-2"></i>Agregar
+            </button>
+          </div>
+          <div id="listaMascotas"></div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN: MIS CITAS -->
+      <div class="section-content" id="citas-section">
+        <div class="custom-card">
+          <div class="custom-card-header">
+            <h4 class="mb-0 fw-bold">
+              <i class="fas fa-calendar-check me-2" style="color: var(--verde-principal)"></i>
+              Mis Citas Médicas
+            </h4>
+          </div>
+          <div id="listaCitas"></div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN: AGENDAR CITA -->
+      <div class="section-content" id="agendar-section">
+        <div class="custom-card">
+          <div class="custom-card-header">
+            <h4 class="mb-0 fw-bold">
+              <i class="fas fa-calendar-plus me-2" style="color: var(--verde-principal)"></i>
+              Agendar Nueva Cita
+            </h4>
+          </div>
+
+          <form onsubmit="agendarCita(event)">
+            <div class="row g-4">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">
+                  <i class="fas fa-paw me-2 text-success"></i>Mascota *
+                </label>
+                <select class="form-select" id="citaMascota" required>
+                  <option value="">-- Selecciona --</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">
+                  <i class="fas fa-stethoscope me-2 text-info"></i>Servicio *
+                </label>
+                <select class="form-select" id="citaServicio" required>
+                  <option value="">-- Selecciona --</option>
+                  <option>Consulta General</option>
+                  <option>Vacunación</option>
+                  <option>Peluquería</option>
+                  <option>Rayos X</option>
+                  <option>Ecografía</option>
+                  <option>Laboratorio</option>
+                  <option>Cirugía</option>
+                  <option>Urgencias</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">
+                  <i class="fas fa-calendar me-2 text-warning"></i>Fecha *
+                </label>
+                <input type="date" class="form-control" id="citaFecha" required onchange="cargarHorariosDisponibles()" />
+                <small class="text-muted">Solo días con disponibilidad</small>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">
+                  <i class="fas fa-clock me-2 text-primary"></i>Hora Disponible *
+                </label>
+                <select class="form-select" id="citaHora" required>
+                  <option value="">Primero selecciona una fecha</option>
+                </select>
+                <small class="text-muted" id="horariosInfo"></small>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label fw-semibold">
+                  <i class="fas fa-comment-medical me-2 text-danger"></i>Comentarios
+                </label>
+                <textarea class="form-control" id="citaComentarios" rows="4" placeholder="Motivo de la consulta..."></textarea>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary-custom btn-lg w-100">
+                  <i class="fas fa-check-circle me-2"></i>Confirmar Cita
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- SECCIÓN: HISTORIAL MÉDICO -->
+      <div class="section-content" id="historial-section">
+        <div class="custom-card">
+          <div class="custom-card-header">
+            <h4 class="mb-0 fw-bold">
+              <i class="fas fa-file-medical me-2" style="color: var(--verde-principal)"></i>
+              Historial Médico Detallado
+            </h4>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-semibold">Selecciona una Mascota</label>
+            <select class="form-select" id="historialMascota" onchange="cargarHistorial()">
+              <option value="">-- Selecciona --</option>
+            </select>
+          </div>
+
+          <div id="timelineHistorial"></div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN: MI PERFIL -->
+      <div class="section-content" id="perfil-section">
+        <div class="custom-card">
+          <div class="custom-card-header">
+            <h4 class="mb-0 fw-bold">
+              <i class="fas fa-user-circle me-2" style="color: var(--verde-principal)"></i>
+              Mi Información Personal
+            </h4>
+          </div>
+
+          <form onsubmit="actualizarPerfil(event)">
+            <div class="row g-4">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Nombre</label>
+                <input type="text" class="form-control" id="perfilNombre" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Apellido</label>
+                <input type="text" class="form-control" id="perfilApellido" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Email</label>
+                <input type="email" class="form-control" id="perfilEmail" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Teléfono</label>
+                <input type="tel" class="form-control" id="perfilTelefono" />
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary-custom">
+                  <i class="fas fa-save me-2"></i>Guardar Cambios
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Agregar Mascota -->
+    <div class="modal fade" id="addPetModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="fas fa-paw me-2"></i>Registrar Nueva Mascota
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body p-4">
+            <form onsubmit="agregarMascota(event)">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Nombre *</label>
+                  <input type="text" class="form-control" id="petNombre" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Especie *</label>
+                  <select class="form-select" id="petEspecie" required>
+                    <option value="">-- Selecciona --</option>
+                    <option>Perro</option>
+                    <option>Gato</option>
+                    <option>Ave</option>
+                    <option>Conejo</option>
+                    <option>Hamster</option>
+                    <option>Otro</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Raza</label>
+                  <input type="text" class="form-control" id="petRaza" placeholder="Ej: Labrador" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Sexo *</label>
+                  <select class="form-select" id="petSexo" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="M">Macho</option>
+                    <option value="H">Hembra</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Fecha de Nacimiento</label>
+                  <input type="date" class="form-control" id="petFechaNac" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Estado de Salud</label>
+                  <input type="text" class="form-control" id="petEstado" placeholder="Ej: Saludable" value="Saludable" />
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary-custom w-100">
+                    <i class="fas fa-check me-2"></i>Registrar Mascota
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      window.addEventListener("load", function () {
+        inicializarDatosIniciales();
+        inicializarDatos();
+        cargarDatosUsuario();
+        actualizarEstadisticas();
+        cargarMascotas();
+        cargarCitas();
+        mostrarFechaHoy();
+        cargarSelectMascotas();
+        configurarFechaMinima();
+        sincronizarConAdmin();
+
+        setInterval(() => {
+          cargarCitas();
+          actualizarEstadisticas();
+        }, 3000);
+      });
+
+      function inicializarDatosIniciales() {
+        if (!localStorage.getItem("usuario")) {
+          const usuarioDemo = {
+            id: 1,
+            nombre: "Juan",
+            apellido: "Pérez",
+            email: "juan@email.com",
+            telefono: "3001234567",
+          };
+          localStorage.setItem("usuario", JSON.stringify(usuarioDemo));
+        }
+
+        if (!localStorage.getItem("mascotas")) {
+          const mascotasDemo = [
+            {
+              id: 1,
+              nombre: "Max",
+              especie: "Perro",
+              raza: "Golden Retriever",
+              sexo: "M",
+              fecha_nac: "2020-05-15",
+              estado: "Saludable",
+            },
+            {
+              id: 2,
+              nombre: "Luna",
+              especie: "Gato",
+              raza: "Siamés",
+              sexo: "H",
+              fecha_nac: "2021-08-20",
+              estado: "Saludable",
+            },
+          ];
+          localStorage.setItem("mascotas", JSON.stringify(mascotasDemo));
+        }
+
+        if (!localStorage.getItem("horariosDisponibles")) {
+          const horarios = {
+            lunes: {
+              activo: true,
+              horarios: ["08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"],
+            },
+            martes: {
+              activo: true,
+              horarios: ["08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"],
+            },
+            miercoles: {
+              activo: true,
+              horarios: ["08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"],
+            },
+            jueves: {
+              activo: true,
+              horarios: ["08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"],
+            },
+            viernes: {
+              activo: true,
+              horarios: ["08:00", "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"],
+            },
+            sabado: {
+              activo: true,
+              horarios: ["09:00", "10:00", "11:00", "12:00", "13:00"],
+            },
+            domingo: {
+              activo: false,
+              horarios: [],
+            },
+          };
+          localStorage.setItem("horariosDisponibles", JSON.stringify(horarios));
+        }
+
+        if (!localStorage.getItem("diasBloqueados")) {
+          const bloqueados = ["2024-12-25", "2025-01-01", "2025-01-06"];
+          localStorage.setItem("diasBloqueados", JSON.stringify(bloqueados));
+        }
+
+        if (!localStorage.getItem("citas")) {
+          localStorage.setItem("citas", JSON.stringify([]));
+        }
+      }
+
+      function inicializarDatos() {
+        if (!localStorage.getItem("historial")) {
+          const mascotas = JSON.parse(localStorage.getItem("mascotas"));
+          if (mascotas && mascotas.length > 0) {
+            const historial = [
+              {
+                id: 1,
+                mascota_id: mascotas[0].id,
+                fecha: "2024-10-15",
+                tipo: "Vacunación",
+                descripcion: "Aplicación de vacuna antirrábica. Paciente en buen estado general, sin reacciones adversas.",
+                peso: 28.0,
+                temperatura: 38.2,
+                medicamentos: "Vacuna antirrábica 1ml",
+                observaciones: "Próxima dosis en 1 año. Mantener reposo por 24 horas.",
+                veterinario: "Dr. García",
+                fechaRegistro: "2024-10-15T10:30:00"
+              },
+              {
+                id: 2,
+                mascota_id: mascotas[0].id,
+                fecha: "2024-09-05",
+                tipo: "Consulta General",
+                descripcion: "Revisión de rutina. Peso estable. Estado general excelente. Sin anomalías detectadas en auscultación cardíaca y pulmonar.",
+                peso: 28.0,
+                temperatura: 38.5,
+                medicamentos: "No se recetaron medicamentos",
+                observaciones: "Mantener dieta balanceada. Próxima revisión en 6 meses.",
+                veterinario: "Dra. Martínez",
+                fechaRegistro: "2024-09-05T14:15:00"
+              },
+            ];
+            localStorage.setItem("historial", JSON.stringify(historial));
+          }
+        }
+      }
+
+      function sincronizarConAdmin() {
+        window.addEventListener("storage", function (e) {
+          if (e.key === "citas") {
+            cargarCitas();
+            actualizarEstadisticas();
+            mostrarNotificacion("Se han actualizado tus citas", "info");
+          }
+          if (e.key === "historial") {
+            cargarHistorial();
+            actualizarEstadisticas();
+          }
+        });
+      }
+
+      function configurarFechaMinima() {
+        const hoy = new Date();
+        const manana = new Date(hoy);
+        manana.setDate(manana.getDate() + 1);
+        const fechaMin = manana.toISOString().split("T")[0];
+        document.getElementById("citaFecha").setAttribute("min", fechaMin);
+
+        const maxFecha = new Date(hoy);
+        maxFecha.setMonth(maxFecha.getMonth() + 3);
+        const fechaMax = maxFecha.toISOString().split("T")[0];
+        document.getElementById("citaFecha").setAttribute("max", fechaMax);
+      }
+
+      function cargarHorariosDisponibles() {
+        const fechaSeleccionada = document.getElementById("citaFecha").value;
+        const selectHora = document.getElementById("citaHora");
+        const infoHorarios = document.getElementById("horariosInfo");
+
+        if (!fechaSeleccionada) {
+          selectHora.innerHTML = '<option value="">Primero selecciona una fecha</option>';
+          infoHorarios.textContent = "";
+          return;
+        }
+
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+        const fechaCita = new Date(fechaSeleccionada + "T00:00:00");
+
+        if (fechaCita < hoy) {
+          selectHora.innerHTML = '<option value="">Fecha no válida</option>';
+          infoHorarios.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>No puedes agendar en fechas pasadas';
+          infoHorarios.className = "text-danger mt-1";
+          return;
+        }
+
+        const diasBloqueados = JSON.parse(localStorage.getItem("diasBloqueados")) || [];
+        if (diasBloqueados.includes(fechaSeleccionada)) {
+          selectHora.innerHTML = '<option value="">Día no disponible</option>';
+          infoHorarios.innerHTML = '<i class="fas fa-ban me-2"></i>Este día no hay atención disponible';
+          infoHorarios.className = "text-danger mt-1";
+          return;
+        }
+
+        const diasSemana = ["domingo", "lunes", "martes", "miercoles", "jueves", "viernes", "sabado"];
+        const diaSemana = diasSemana[fechaCita.getDay()];
+
+        const horariosConfig = JSON.parse(localStorage.getItem("horariosDisponibles"));
+        const horariosDia = horariosConfig[diaSemana];
+
+        if (!horariosDia || !horariosDia.activo) {
+          selectHora.innerHTML = '<option value="">No hay atención este día</option>';
+          infoHorarios.innerHTML = `<i class="fas fa-calendar-times me-2"></i>Cerrado los ${diaSemana}s`;
+          infoHorarios.className = "text-danger mt-1";
+          return;
+        }
+
+        const todasLasCitas = JSON.parse(localStorage.getItem("citas")) || [];
+        const citasDelDia = todasLasCitas.filter(c => 
+          c.fecha === fechaSeleccionada && (c.estado === "Pendiente" || c.estado === "Confirmada")
+        );
+
+        const horariosOcupados = citasDelDia.map(c => c.hora);
+        const horariosLibres = horariosDia.horarios.filter(h => !horariosOcupados.includes(h));
+
+        if (horariosLibres.length === 0) {
+          selectHora.innerHTML = '<option value="">No hay horarios disponibles</option>';
+          infoHorarios.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Día completo - Intenta otra fecha';
+          infoHorarios.className = "text-warning mt-1";
+        } else {
+          selectHora.innerHTML = '<option value="">-- Selecciona un horario --</option>';
+          horariosLibres.forEach(hora => {
+            selectHora.innerHTML += `<option value="${hora}">${formatearHora(hora)}</option>`;
+          });
+          infoHorarios.innerHTML = `<i class="fas fa-check-circle me-2"></i>${horariosLibres.length} horario${horariosLibres.length > 1 ? 's' : ''} disponible${horariosLibres.length > 1 ? 's' : ''}`;
+          infoHorarios.className = "text-success mt-1";
+        }
+      }
+
+      function validarDisponibilidad(fecha, hora) {
+        const todasLasCitas = JSON.parse(localStorage.getItem("citas")) || [];
+        const conflicto = todasLasCitas.find(c => 
+          c.fecha === fecha && c.hora === hora && (c.estado === "Pendiente" || c.estado === "Confirmada")
+        );
+        return !conflicto;
+      }
+
+      function formatearHora(hora) {
+        const [h, m] = hora.split(":");
+        const hNum = parseInt(h);
+        const ampm = hNum >= 12 ? "PM" : "AM";
+        const h12 = hNum % 12 || 12;
+        return `${h12}:${m} ${ampm}`;
+      }
+
+      function agendarCita(event) {
+        event.preventDefault();
+
+        const mascotaId = parseInt(document.getElementById("citaMascota").value);
+        const servicio = document.getElementById("citaServicio").value;
+        const fecha = document.getElementById("citaFecha").value;
+        const hora = document.getElementById("citaHora").value;
+        const comentarios = document.getElementById("citaComentarios").value;
+
+        if (!mascotaId || !servicio || !fecha || !hora) {
+          mostrarNotificacion("Por favor completa todos los campos requeridos", "warning");
+          return;
+        }
+
+        if (!validarDisponibilidad(fecha, hora)) {
+          mostrarNotificacion("⚠️ Este horario ya no está disponible. Por favor selecciona otro.", "danger");
+          cargarHorariosDisponibles();
+          return;
+        }
+
+        const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
+        const mascota = mascotas.find(m => m.id === mascotaId);
+        const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+        const nuevaCita = {
+          id: Date.now(),
+          usuario_id: usuario.id,
+          mascota_id: mascotaId,
+          cliente: `${usuario.nombre} ${usuario.apellido}`,
+          email: usuario.email,
+          telefono: usuario.telefono,
+          mascota: mascota.nombre,
+          especie: mascota.especie,
+          raza: mascota.raza,
+          servicio: servicio,
+          fecha: fecha,
+          hora: hora,
+          comentarios: comentarios || "",
+          estado: "Pendiente",
+          fechaCreacion: new Date().toISOString(),
+        };
+
+        const citas = JSON.parse(localStorage.getItem("citas")) || [];
+        citas.push(nuevaCita);
+        localStorage.setItem("citas", JSON.stringify(citas));
+
+        event.target.reset();
+        document.getElementById("citaHora").innerHTML = '<option value="">Primero selecciona una fecha</option>';
+        document.getElementById("horariosInfo").textContent = "";
+
+        cargarCitas();
+        actualizarEstadisticas();
+
+        mostrarNotificacion(
+          `✅ ¡Cita agendada exitosamente!<br><small>Tu cita para <strong>${mascota.nombre}</strong> el ${formatearFecha(fecha)} a las ${formatearHora(hora)} está pendiente de confirmación.</small>`,
+          "success"
+        );
+
+        setTimeout(() => {
+          cambiarSeccion(null, "citas");
+        }, 2000);
+      }
+
+      function cargarCitas() {
+        const todasLasCitas = JSON.parse(localStorage.getItem("citas")) || [];
+        const usuario = JSON.parse(localStorage.getItem("usuario"));
+        const citas = todasLasCitas.filter(c => c.email === usuario.email);
+        const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
+        const container = document.getElementById("listaCitas");
+
+        if (citas.length === 0) {
+          container.innerHTML = `
+            <div class="text-center py-5">
+              <i class="fas fa-calendar-times fa-4x text-muted mb-3"></i>
+              <p class="text-muted">No tienes citas registradas</p>
+              <button class="btn btn-primary-custom" onclick="cambiarSeccion(null, 'agendar')">
+                <i class="fas fa-plus me-2"></i>Agendar Primera Cita
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        let html = "";
+        citas.sort((a, b) => new Date(b.fecha) - new Date(a.fecha)).forEach(cita => {
+          const mascota = mascotas.find(m => m.id === cita.mascota_id);
+
+          let badgeClass, badgeIcon, estadoTexto;
+          switch (cita.estado) {
+            case "Pendiente":
+              badgeClass = "badge-pending";
+              badgeIcon = "fa-clock";
+              estadoTexto = "Pendiente de Aprobación";
+              break;
+            case "Confirmada":
+              badgeClass = "badge-confirmed";
+              badgeIcon = "fa-check-circle";
+              estadoTexto = "Confirmada";
+              break;
+            case "Completada":
+              badgeClass = "badge-completed";
+              badgeIcon = "fa-check-double";
+              estadoTexto = "Completada";
+              break;
+            case "Cancelada":
+              badgeClass = "badge-cancelled";
+              badgeIcon = "fa-times-circle";
+              estadoTexto = "Cancelada";
+              break;
+            case "Rechazada":
+              badgeClass = "badge-cancelled";
+              badgeIcon = "fa-ban";
+              estadoTexto = "Rechazada";
+              break;
+            default:
+              badgeClass = "badge-pending";
+              badgeIcon = "fa-question-circle";
+              estadoTexto = cita.estado;
+          }
+
+          const hoy = new Date();
+          hoy.setHours(0, 0, 0, 0);
+          const fechaCita = new Date(cita.fecha + "T00:00:00");
+          const esFutura = fechaCita >= hoy;
+
+          html += `
+            <div class="appointment-card">
+              <div class="row align-items-center">
+                <div class="col-md-8">
+                  <div class="d-flex align-items-center mb-2">
+                    <h5 class="mb-0 me-3">${cita.servicio}</h5>
+                    <span class="badge-custom ${badgeClass}">
+                      <i class="fas ${badgeIcon} me-1"></i>${estadoTexto}
+                    </span>
+                  </div>
+                  
+                  <p class="mb-1">
+                    <i class="fas fa-paw me-2 text-primary"></i>
+                    <strong>${mascota ? mascota.nombre : "Mascota"}</strong> 
+                    <span class="text-muted">(${mascota ? mascota.especie : ""})</span>
+                  </p>
+                  
+                  <p class="mb-1">
+                    <i class="fas fa-calendar me-2 text-info"></i>
+                    ${formatearFecha(cita.fecha)} 
+                    <span class="mx-2">•</span>
+                    <i class="fas fa-clock me-2 text-warning"></i>
+                    ${formatearHora(cita.hora)}
+                  </p>
+                  
+                  ${cita.comentarios ? `
+                    <p class="mb-0 text-muted small">
+                      <i class="fas fa-comment me-2"></i>${cita.comentarios}
+                    </p>
+                  ` : ''}
+                  
+                  ${cita.motivoRechazo ? `
+                    <div class="alert alert-danger mt-2 mb-0 py-2">
+                      <small><strong>Motivo de rechazo:</strong> ${cita.motivoRechazo}</small>
+                    </div>
+                  ` : ''}
+                </div>
+                
+                <div class="col-md-4 text-end">
+                  ${cita.estado === "Pendiente" && esFutura ? `
+                    <button class="btn btn-sm btn-outline-danger" onclick="cancelarCita(${cita.id})">
+                      <i class="fas fa-times me-1"></i>Cancelar Cita
+                    </button>
+                  ` : ''}
+                  
+                  ${cita.estado === "Rechazada" ? `
+                    <button class="btn btn-sm btn-primary-custom" onclick="reagendarCita(${cita.id})">
+                      <i class="fas fa-redo me-1"></i>Reagendar
+                    </button>
+                  ` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      }
+
+      function cancelarCita(id) {
+        if (!confirm("¿Estás seguro que deseas cancelar esta cita?")) return;
+
+        let citas = JSON.parse(localStorage.getItem("citas")) || [];
+        const index = citas.findIndex(c => c.id === id);
+
+        if (index !== -1) {
+          citas[index].estado = "Cancelada";
+          citas[index].fechaCancelacion = new Date().toISOString();
+          localStorage.setItem("citas", JSON.stringify(citas));
+        }
+
+        cargarCitas();
+        actualizarEstadisticas();
+        mostrarNotificacion("✅ Cita cancelada exitosamente", "info");
+      }
+
+      function reagendarCita(id) {
+        const citas = JSON.parse(localStorage.getItem("citas")) || [];
+        const cita = citas.find(c => c.id === id);
+
+        if (cita) {
+          cambiarSeccion(null, "agendar");
+          setTimeout(() => {
+            document.getElementById("citaMascota").value = cita.mascota_id;
+            document.getElementById("citaServicio").value = cita.servicio;
+            document.getElementById("citaComentarios").value = cita.comentarios || "";
+            mostrarNotificacion("Selecciona nueva fecha y hora para reagendar", "info");
+          }, 300);
+        }
+      }
+
+      function actualizarEstadisticas() {
+        const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
+        const usuario = JSON.parse(localStorage.getItem("usuario"));
+        const todasLasCitas = JSON.parse(localStorage.getItem("citas")) || [];
+        const citas = todasLasCitas.filter(c => c.email === usuario.email);
+        const historial = JSON.parse(localStorage.getItem("historial")) || [];
+        const historialUsuario = historial.filter(h => {
+          const mascotasIds = mascotas.map(m => m.id);
+          return mascotasIds.includes(h.mascota_id);
+        });
+
+        document.getElementById("totalMascotas").textContent = mascotas.length;
+        document.getElementById("totalCitas").textContent = citas.length;
+
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+        const pendientes = citas.filter(c => {
+          const fechaCita = new Date(c.fecha + "T00:00:00");
+          return fechaCita >= hoy && (c.estado === "Pendiente" || c.estado === "Confirmada");
+        }).length;
+
+        document.getElementById("citasPendientes").textContent = pendientes;
+        document.getElementById("totalHistoriales").textContent = historialUsuario.length;
+
+        mostrarProximasCitas();
+      }
+
+      function mostrarProximasCitas() {
+        const usuario = JSON.parse(localStorage.getItem("usuario"));
+        const todasLasCitas = JSON.parse(localStorage.getItem("citas")) || [];
+        const citas = todasLasCitas.filter(c => c.email === usuario.email);
+        const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
+
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+
+        const proximas = citas
+          .filter(c => {
+            const fechaCita = new Date(c.fecha + "T00:00:00");
+            return fechaCita >= hoy && (c.estado === "Pendiente" || c.estado === "Confirmada");
+          })
+          .sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+          .slice(0, 3);
+
+        const container = document.getElementById("proximasCitasList");
+
+        if (proximas.length === 0) {
+          container.innerHTML = `
+            <div class="text-center py-4">
+              <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+              <p class="text-muted mb-3">No tienes citas próximas</p>
+              <button class="btn btn-primary-custom btn-sm" onclick="cambiarSeccion(null, 'agendar')">
+                <i class="fas fa-plus me-2"></i>Agendar Cita
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        let html = "";
+        proximas.forEach(cita => {
+          const mascota = mascotas.find(m => m.id === cita.mascota_id);
+          const badgeClass = cita.estado === "Pendiente" ? "badge-pending" : "badge-confirmed";
+          const badgeIcon = cita.estado === "Pendiente" ? "fa-clock" : "fa-check-circle";
+
+          html += `
+            <div class="appointment-card">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h5 class="mb-2">${cita.servicio}</h5>
+                  <p class="mb-1 text-muted">
+                    <i class="fas fa-paw me-2"></i>${mascota ? mascota.nombre : "Mascota"} (${mascota ? mascota.especie : ""})
+                  </p>
+                  <p class="mb-0 text-muted">
+                    <i class="fas fa-calendar me-2"></i>${formatearFecha(cita.fecha)} - ${formatearHora(cita.hora)}
+                  </p>
+                </div>
+                <span class="badge-custom ${badgeClass}">
+                  <i class="fas ${badgeIcon} me-1"></i>${cita.estado}
+                </span>
+              </div>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      }
+
+      function cargarDatosUsuario() {
+        const usuario = JSON.parse(localStorage.getItem("usuario"));
+        if (!usuario) return;
+
+        document.getElementById("userName").textContent = `${usuario.nombre} ${usuario.apellido}`;
+        document.getElementById("userEmail").textContent = usuario.email;
+        document.getElementById("welcomeName").textContent = usuario.nombre;
+        document.getElementById("perfilNombre").value = usuario.nombre;
+        document.getElementById("perfilApellido").value = usuario.apellido;
+        document.getElementById("perfilEmail").value = usuario.email;
+        document.getElementById("perfilTelefono").value = usuario.telefono;
+      }
+
+      function mostrarFechaHoy() {
+        const hoy = new Date();
+        const opciones = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+        document.getElementById("fechaHoy").textContent = hoy.toLocaleDateString("es-ES", opciones);
+      }
+
+      function actualizarPerfil(event) {
+        event.preventDefault();
+
+        const usuario = {
+          id: JSON.parse(localStorage.getItem("usuario")).id,
+          nombre: document.getElementById("perfilNombre").value,
+          apellido: document.getElementById("perfilApellido").value,
+          email: document.getElementById("perfilEmail").value,
+          telefono: document.getElementById("perfilTelefono").value,
+        };
+
+        localStorage.setItem("usuario", JSON.stringify(usuario));
+        cargarDatosUsuario();
+        mostrarNotificacion("✅ Perfil actualizado exitosamente", "success");
+      }
+
+      function cargarMascotas() {
+        const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
+        const container = document.getElementById("listaMascotas");
+
+        if (mascotas.length === 0) {
+          container.innerHTML = `
+            <div class="text-center py-5">
+              <i class="fas fa-paw fa-4x text-muted mb-3"></i>
+              <p class="text-muted mb-3">No tienes mascotas registradas</p>
+              <button class="btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#addPetModal">
+                <i class="fas fa-plus me-2"></i>Registrar Primera Mascota
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        let html = "";
+        mascotas.forEach(mascota => {
+          const emoji = mascota.especie === "Perro" ? "🐕" : 
+                        mascota.especie === "Gato" ? "🐈" : 
+                        mascota.especie === "Ave" ? "🐦" : 
+                        mascota.especie === "Conejo" ? "🐰" : "🐾";
+
+          const edad = calcularEdad(mascota.fecha_nac);
+
+          html += `
+            <div class="pet-card">
+              <div class="d-flex align-items-center">
+                <div class="pet-avatar me-3">${emoji}</div>
+                <div class="flex-grow-1">
+                  <h5 class="mb-1">${mascota.nombre}</h5>
+                  <p class="mb-0 text-muted">
+                    ${mascota.especie} • ${mascota.raza || "Sin raza"} • ${edad} • ${mascota.sexo === "M" ? "Macho" : "Hembra"}
+                  </p>
+                  <small class="text-success">
+                    <i class="fas fa-heartbeat me-1"></i>${mascota.estado}
+                  </small>
+                </div>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-outline-success" onclick="verHistorialMascota(${mascota.id})" title="Ver Historial">
+                    <i class="fas fa-file-medical"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger" onclick="eliminarMascota(${mascota.id})" title="Eliminar">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      }
+
+      function agregarMascota(event) {
+        event.preventDefault();
+
+        const nuevaMascota = {
+          id: Date.now(),
+          nombre: document.getElementById("petNombre").value,
+          especie: document.getElementById("petEspecie").value,
+          raza: document.getElementById("petRaza").value || "Sin especificar",
+          sexo: document.getElementById("petSexo").value,
+          fecha_nac: document.getElementById("petFechaNac").value,
+          estado: document.getElementById("petEstado").value || "Saludable",
+        };
+
+        const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
+        mascotas.push(nuevaMascota);
+        localStorage.setItem("mascotas", JSON.stringify(mascotas));
+
+        const modal = bootstrap.Modal.getInstance(document.getElementById("addPetModal"));
+        modal.hide();
+
+        event.target.reset();
+
+        cargarMascotas();
+        actualizarEstadisticas();
+        cargarSelectMascotas();
+
+        mostrarNotificacion(`✅ ¡${nuevaMascota.nombre} ha sido registrado exitosamente!`, "success");
+      }
+
+      function eliminarMascota(id) {
+        const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
+        const mascota = mascotas.find(m => m.id === id);
+
+        if (!confirm(`¿Estás seguro de eliminar a ${mascota.nombre}?`)) return;
+
+        const citas = JSON.parse(localStorage.getItem("citas")) || [];
+        const citasPendientes = citas.filter(c => 
+          c.mascota_id === id && (c.estado === "Pendiente" || c.estado === "Confirmada")
+        );
+
+        if (citasPendientes.length > 0) {
+          if (!confirm(`${mascota.nombre} tiene ${citasPendientes.length} cita(s) pendiente(s). ¿Deseas continuar?`)) {
+            return;
+          }
+        }
+
+        const mascotasActualizadas = mascotas.filter(m => m.id !== id);
+        localStorage.setItem("mascotas", JSON.stringify(mascotasActualizadas));
+
+        cargarMascotas();
+        actualizarEstadisticas();
+        cargarSelectMascotas();
+
+        mostrarNotificacion("✅ Mascota eliminada correctamente", "info");
+      }
+
+      function calcularEdad(fechaNac) {
+        if (!fechaNac) return "Edad no especificada";
+
+        const hoy = new Date();
+        const nacimiento = new Date(fechaNac);
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        const mes = hoy.getMonth() - nacimiento.getMonth();
+
+        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+          edad--;
+        }
+
+        if (edad === 0) {
+          const meses = mes < 0 ? 12 + mes : mes;
+          return meses === 1 ? "1 mes" : `${meses} meses`;
+        }
+
+        return edad === 1 ? "1 año" : `${edad} años`;
+      }
+
+      function verHistorialMascota(mascotaId) {
+        cambiarSeccion(null, "historial");
+        document.getElementById("historialMascota").value = mascotaId;
+        cargarHistorial();
+      }
+
+      function cargarHistorial() {
+        const mascotaId = parseInt(document.getElementById("historialMascota").value);
+        const container = document.getElementById("timelineHistorial");
+
+        if (!mascotaId) {
+          container.innerHTML = `
+            <div class="text-center py-5">
+              <i class="fas fa-file-medical fa-4x text-muted mb-3"></i>
+              <p class="text-muted">Selecciona una mascota para ver su historial médico</p>
+            </div>
+          `;
+          return;
+        }
+
+        const historial = JSON.parse(localStorage.getItem("historial")) || [];
+        const registros = historial
+          .filter(h => h.mascota_id === mascotaId)
+          .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+        if (registros.length === 0) {
+          container.innerHTML = `
+            <div class="text-center py-5">
+              <i class="fas fa-clipboard-list fa-4x text-muted mb-3"></i>
+              <p class="text-muted">No hay registros médicos para esta mascota</p>
+              <small class="text-muted">Los registros se crearán después de cada consulta</small>
+            </div>
+          `;
+          return;
+        }
+
+        let html = '<div class="timeline">';
+
+        registros.forEach((registro, index) => {
+          const iconClass = 
+            registro.tipo === "Vacunación" ? "fa-syringe" : 
+            registro.tipo === "Consulta General" ? "fa-stethoscope" : 
+            registro.tipo === "Cirugía" ? "fa-cut" : 
+            registro.tipo === "Desparasitación" ? "fa-pills" : 
+            "fa-notes-medical";
+
+          html += `
+            <div class="timeline-item">
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <h5 class="mb-1">
+                      <i class="fas ${iconClass} me-2 text-primary"></i>
+                      ${registro.tipo}
+                    </h5>
+                    <small class="text-muted">
+                      <i class="fas fa-calendar me-2"></i>${formatearFecha(registro.fecha)}
+                    </small>
+                  </div>
+                  <span class="badge bg-success">Completado</span>
+                </div>
+
+                ${registro.descripcion ? `
+                  <div class="historial-detalle-box mb-3">
+                    <h6 class="fw-bold mb-2" style="color: var(--verde-principal);">
+                      <i class="fas fa-notes-medical me-2"></i>Diagnóstico / Descripción
+                    </h6>
+                    <p class="mb-0">${registro.descripcion}</p>
+                  </div>
+                ` : ''}
+
+                ${registro.medicamentos ? `
+                  <div class="historial-detalle-box mb-3">
+                    <h6 class="fw-bold mb-2" style="color: var(--verde-principal);">
+                      <i class="fas fa-pills me-2"></i>Medicamentos Recetados
+                    </h6>
+                    <p class="mb-0">${registro.medicamentos}</p>
+                  </div>
+                ` : ''}
+
+                ${registro.observaciones ? `
+                  <div class="historial-detalle-box mb-3">
+                    <h6 class="fw-bold mb-2" style="color: var(--verde-principal);">
+                      <i class="fas fa-clipboard-list me-2"></i>Observaciones / Recomendaciones
+                    </h6>
+                    <p class="mb-0">${registro.observaciones}</p>
+                  </div>
+                ` : ''}
+
+                <div class="row g-2 mt-3">
+                  ${registro.peso ? `
+                    <div class="col-md-6">
+                      <div class="historial-info-item">
+                        <i class="fas fa-weight"></i>
+                        <strong>Peso:</strong> ${registro.peso} kg
+                      </div>
+                    </div>
+                  ` : ''}
+                  
+                  ${registro.temperatura ? `
+                    <div class="col-md-6">
+                      <div class="historial-info-item">
+                        <i class="fas fa-thermometer-half"></i>
+                        <strong>Temperatura:</strong> ${registro.temperatura}°C
+                      </div>
+                    </div>
+                  ` : ''}
+                  
+                  ${registro.veterinario ? `
+                    <div class="col-md-6">
+                      <div class="historial-info-item">
+                        <i class="fas fa-user-md"></i>
+                        <strong>Veterinario:</strong> ${registro.veterinario}
+                      </div>
+                    </div>
+                  ` : ''}
+                  
+                  ${registro.fechaRegistro ? `
+                    <div class="col-md-6">
+                      <div class="historial-info-item">
+                        <i class="fas fa-clock"></i>
+                        <strong>Registrado:</strong> ${formatearFechaCompleta(registro.fechaRegistro)}
+                      </div>
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        html += '</div>';
+        container.innerHTML = html;
+      }
+
+      function cambiarSeccion(event, seccion) {
+        if (event) event.preventDefault();
+
+        document.querySelectorAll(".section-content").forEach(s => {
+          s.classList.remove("active");
+        });
+
+        document.getElementById(seccion + "-section").classList.add("active");
+
+        document.querySelectorAll(".sidebar-menu .nav-link").forEach(link => {
+          link.classList.remove("active");
+        });
+
+        if (event) {
+          event.currentTarget.classList.add("active");
+        }
+
+        if (window.innerWidth < 992) {
+          document.getElementById("sidebar").classList.remove("show");
+        }
+      }
+
+      function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("show");
+      }
+
+      function cerrarSesion() {
+        if (confirm("¿Estás seguro que deseas cerrar sesión?")) {
+          sessionStorage.clear();
+          window.location.href = "index.html";
+        }
+      }
+
+      function cargarSelectMascotas() {
+        const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
+
+        const selectCita = document.getElementById("citaMascota");
+        selectCita.innerHTML = '<option value="">-- Selecciona una mascota --</option>';
+
+        if (mascotas.length === 0) {
+          selectCita.innerHTML = '<option value="">Primero registra una mascota</option>';
+        } else {
+          mascotas.forEach(mascota => {
+            selectCita.innerHTML += `<option value="${mascota.id}">${mascota.nombre} (${mascota.especie})</option>`;
+          });
+        }
+
+        const selectHistorial = document.getElementById("historialMascota");
+        selectHistorial.innerHTML = '<option value="">-- Selecciona una mascota --</option>';
+
+        mascotas.forEach(mascota => {
+          selectHistorial.innerHTML += `<option value="${mascota.id}">${mascota.nombre} (${mascota.especie})</option>`;
+        });
+      }
+
+      function formatearFecha(fecha) {
+        const date = new Date(fecha + "T00:00:00");
+        const opciones = { year: "numeric", month: "long", day: "numeric", weekday: "long" };
+        return date.toLocaleDateString("es-ES", opciones);
+      }
+
+      function formatearFechaCompleta(fecha) {
+        const date = new Date(fecha);
+        const opciones = { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" };
+        return date.toLocaleDateString("es-ES", opciones);
+      }
+
+      function mostrarNotificacion(mensaje, tipo) {
+        const colores = {
+          success: "#10b981",
+          danger: "#ef4444",
+          warning: "#f59e0b",
+          info: "#3b82f6",
+        };
+
+        const iconos = {
+          success: "fa-check-circle",
+          danger: "fa-exclamation-circle",
+          warning: "fa-exclamation-triangle",
+          info: "fa-info-circle",
+        };
+
+        const notificacion = document.createElement("div");
+        notificacion.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: white;
+          padding: 20px 25px;
+          border-radius: 12px;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+          z-index: 9999;
+          min-width: 300px;
+          max-width: 500px;
+          border-left: 5px solid ${colores[tipo]};
+          animation: slideIn 0.3s ease;
+        `;
+
+        notificacion.innerHTML = `
+          <div style="display: flex; align-items: start; gap: 15px;">
+            <i class="fas ${iconos[tipo]}" style="color: ${colores[tipo]}; font-size: 24px;"></i>
+            <div style="flex: 1;">
+              ${mensaje}
+            </div>
+            <button onclick="this.parentElement.parentElement.remove()" 
+                    style="background: none; border: none; cursor: pointer; color: #999; font-size: 20px; padding: 0; line-height: 1;">
+              ×
+            </button>
+          </div>
+        `;
+
+        const style = document.createElement("style");
+        style.textContent = `
+          @keyframes slideIn {
+            from {
+              transform: translateX(400px);
+              opacity: 0;
+            }
+            to {
+              transform: translateX(0);
+              opacity: 1;
+            }
+          }
+        `;
+        document.head.appendChild(style);
+
+        document.body.appendChild(notificacion);
+
+        setTimeout(() => {
+          notificacion.style.animation = "slideIn 0.3s ease reverse";
+          setTimeout(() => notificacion.remove(), 300);
+        }, 5000);
+      }
+
+      document.addEventListener("click", function (event) {
+        const sidebar = document.getElementById("sidebar");
+        const toggle = document.querySelector(".mobile-toggle");
+
+        if (window.innerWidth < 992) {
+          if (sidebar && !sidebar.contains(event.target) && 
+              event.target !== toggle && !toggle.contains(event.target)) {
+            sidebar.classList.remove("show");
+          }
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const sidebar = document.getElementById("sidebar");
+
+        if (sidebar) {
+          const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+              if (mutation.attributeName === "class") {
+                if (sidebar.classList.contains("show") && window.innerWidth < 992) {
+                  document.body.style.overflow = "hidden";
+                } else {
+                  document.body.style.overflow = "";
+                }
+              }
+            });
+          });
+
+          observer.observe(sidebar, { attributes: true });
+        }
+      });
+    </script>
+
+    
+  </body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - CliniCan</title>
+    <link rel="icon" href="img/Logo.jpeg" type="jpeg" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="Styles_Boos.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!--fila menu-->
+    <header class="fixed-top">
+      <div class="col-12">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary py-1">
+          <div class="container-fluid">
+            <a class="navbar-brand mx-5" href="index.html"
+              ><img src="img/LOGOCliniVet.svg" alt="imagen logo" width="100"
+            /></a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div
+              class="collapse navbar-collapse ms-auto"
+              id="navbarNavDropdown"
+            >
+              <ul class="navbar-nav m-2 ms-auto mx-5">
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-secondary text-white active mx-lg-5 nav-animado"
+                    aria-current="page"
+                    href="login.html"
+                    >CITAS MÉDICAS</a
+                  >
+                </li>
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle mx-lg-5 text-white nav-animado"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    SERVICIOS
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a class="dropdown-item" href="#">Consulta General</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Vacunación Anual</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Corte de Pelo y Baño</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#"
+                        >Radiografía (Rayos X)</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Ecografía</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Laboratorio Clínico</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item mx-lg-5">
+                  <a
+                    class="nav-link rounded text-white nav-animado"
+                    href="blog.html"
+                    >BLOG</a
+                  >
+                </li>
+                <li class="nav-item mx-lg-5">
+                  <a class="nav-link text-white nav-animado" href="#"
+                    >CONTACTO</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!--Fin fila menu-->
+    <br /><br /><br /><br /><br />
+    <!-- Header del Blog -->
+    <div class="blog-header">
+      <small>PUBLICACIONES DE INTERÉS PARA TU MASCOTA</small>
+      <h1>BLOG</h1>
+      <div class="underline"></div>
+    </div>
+
+    <!-- Contenedor de Artículos -->
+    <div class="blog-container">
+      <div class="row g-4">
+        <!-- Artículo 1: Otitis en Perros -->
+        <div class="col-lg-4 col-md-6">
+          <div class="blog-card">
+            <div class="blog-card-image-container">
+              <img
+                src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&q=80"
+                alt="Perro feliz en la playa"
+                class="blog-card-image"
+              />
+              <span class="blog-card-category">Salud Canina</span>
+            </div>
+            <div class="blog-card-content">
+              <h3 class="blog-card-title">OTITIS EN PERROS</h3>
+              <div class="blog-card-meta">
+                <span><i class="fas fa-calendar me-2"></i>15 Oct 2024</span>
+                <span><i class="fas fa-clock me-2"></i>5 min lectura</span>
+              </div>
+              <p class="blog-card-excerpt">
+                Otitis en perros: su mascota puede padecer inflamación del oído,
+                una condición común pero dolorosa. Aprende a identificar los
+                síntomas tempranos como sacudidas de cabeza, rascado excesivo,
+                olor desagradable y enrojecimiento. La detección temprana es
+                clave para un tratamiento efectivo y prevenir complicaciones.
+              </p>
+              <a
+                href="#"
+                class="btn-read-more"
+                onclick="mostrarArticulo(1, event)"
+              >
+                Leer más <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artículo 2: Desparasitación -->
+        <div class="col-lg-4 col-md-6">
+          <div class="blog-card">
+            <div class="blog-card-image-container">
+              <img
+                src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=800&q=80"
+                alt="Perro con juguete"
+                class="blog-card-image"
+              />
+              <span class="blog-card-category">Prevención</span>
+            </div>
+            <div class="blog-card-content">
+              <h3 class="blog-card-title">
+                Desparasitación de mascotas; todo lo que debes saber
+              </h3>
+              <div class="blog-card-meta">
+                <span><i class="fas fa-calendar me-2"></i>10 Oct 2024</span>
+                <span><i class="fas fa-clock me-2"></i>7 min lectura</span>
+              </div>
+              <p class="blog-card-excerpt">
+                Desparasitación de tu mascota: muchas veces no le damos la
+                importancia hasta no ver los parásitos. Descubre los calendarios
+                de desparasitación según la edad, tipos de parásitos internos y
+                externos, síntomas de infestación y productos más efectivos para
+                proteger a tu compañero peludo.
+              </p>
+              <a
+                href="#"
+                class="btn-read-more"
+                onclick="mostrarArticulo(2, event)"
+              >
+                Leer más <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artículo 3: Vacunación -->
+        <div class="col-lg-4 col-md-6">
+          <div class="blog-card">
+            <div class="blog-card-image-container">
+              <img
+                src="https://images.unsplash.com/photo-1558788353-f76d92427f16?w=800&q=80"
+                alt="Perro feliz en exterior"
+                class="blog-card-image"
+              />
+              <span class="blog-card-category">Vacunación</span>
+            </div>
+            <div class="blog-card-content">
+              <h3 class="blog-card-title">
+                Vacunación de mascotas: Prevención de enfermedades mortales
+              </h3>
+              <div class="blog-card-meta">
+                <span><i class="fas fa-calendar me-2"></i>5 Oct 2024</span>
+                <span><i class="fas fa-clock me-2"></i>6 min lectura</span>
+              </div>
+              <p class="blog-card-excerpt">
+                Vacunación de mascotas: Prevención de enfermedades mortales.
+                Protege a tu familia y a tu mascota con el calendario de
+                vacunación adecuado. Conoce las vacunas esenciales, refuerzos
+                necesarios, efectos secundarios normales y cómo preparar a tu
+                mascota para la visita al veterinario.
+              </p>
+              <a
+                href="#"
+                class="btn-read-more"
+                onclick="mostrarArticulo(3, event)"
+              >
+                Leer más <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artículo 4: Nutrición Canina -->
+        <div class="col-lg-4 col-md-6">
+          <div class="blog-card">
+            <div class="blog-card-image-container">
+              <img
+                src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&q=80"
+                alt="Perro comiendo"
+                class="blog-card-image"
+              />
+              <span class="blog-card-category">Nutrición</span>
+            </div>
+            <div class="blog-card-content">
+              <h3 class="blog-card-title">
+                Alimentación Balanceada para Perros
+              </h3>
+              <div class="blog-card-meta">
+                <span><i class="fas fa-calendar me-2"></i>1 Oct 2024</span>
+                <span><i class="fas fa-clock me-2"></i>8 min lectura</span>
+              </div>
+              <p class="blog-card-excerpt">
+                Una alimentación adecuada es fundamental para la salud de tu
+                mascota. Aprende sobre nutrientes esenciales, porciones
+                correctas según edad y tamaño, alimentos prohibidos para perros,
+                y cómo leer etiquetas de alimentos comerciales para tomar las
+                mejores decisiones nutricionales.
+              </p>
+              <a
+                href="#"
+                class="btn-read-more"
+                onclick="mostrarArticulo(4, event)"
+              >
+                Leer más <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artículo 5: Cuidado Dental -->
+        <div class="col-lg-4 col-md-6">
+          <div class="blog-card">
+            <div class="blog-card-image-container">
+              <img
+                src="https://images.unsplash.com/photo-1477884213360-7e9d7dcc1e48?w=800&q=80"
+                alt="Perro sonriendo"
+                class="blog-card-image"
+              />
+              <span class="blog-card-category">Higiene</span>
+            </div>
+            <div class="blog-card-content">
+              <h3 class="blog-card-title">Salud Dental en Mascotas</h3>
+              <div class="blog-card-meta">
+                <span><i class="fas fa-calendar me-2"></i>28 Sep 2024</span>
+                <span><i class="fas fa-clock me-2"></i>5 min lectura</span>
+              </div>
+              <p class="blog-card-excerpt">
+                El cuidado dental es esencial pero a menudo olvidado. Descubre
+                cómo prevenir enfermedades periodontales, técnicas de cepillado
+                dental, juguetes y snacks dentales recomendados, y señales de
+                problemas dentales que requieren atención veterinaria inmediata.
+              </p>
+              <a
+                href="#"
+                class="btn-read-more"
+                onclick="mostrarArticulo(5, event)"
+              >
+                Leer más <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artículo 6: Ejercicio y Bienestar -->
+        <div class="col-lg-4 col-md-6">
+          <div class="blog-card">
+            <div class="blog-card-image-container">
+              <img
+                src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&q=80"
+                alt="Perro corriendo"
+                class="blog-card-image"
+              />
+              <span class="blog-card-category">Bienestar</span>
+            </div>
+            <div class="blog-card-content">
+              <h3 class="blog-card-title">
+                Ejercicio y Actividad Física para Perros
+              </h3>
+              <div class="blog-card-meta">
+                <span><i class="fas fa-calendar me-2"></i>25 Sep 2024</span>
+                <span><i class="fas fa-clock me-2"></i>6 min lectura</span>
+              </div>
+              <p class="blog-card-excerpt">
+                El ejercicio regular es vital para la salud física y mental de
+                tu mascota. Conoce las necesidades de ejercicio según raza y
+                edad, actividades divertidas para realizar juntos, beneficios
+                del ejercicio regular, y cómo prevenir el sobreesfuerzo y
+                lesiones durante el juego.
+              </p>
+              <a
+                href="#"
+                class="btn-read-more"
+                onclick="mostrarArticulo(6, event)"
+              >
+                Leer más <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <!-- COLUMNA 1: Quiénes Somos -->
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="footer-title">Quiénes Somos</h5>
+            <p class="footer-text">
+              CliniCan Clínica Veterinaria es un centro especializado en el
+              cuidado integral de tu mascota. Contamos con más de 10 años de
+              experiencia y profesionales certificados.
+            </p>
+            <div class="social-links mt-3">
+              <a href="https://facebook.com" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://wa.me/573041234567" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- COLUMNA 2: Enlaces Rápidos -->
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="footer-title">Enlaces Rápidos</h5>
+            <a href="#inicio" class="footer-link">→ Inicio</a>
+            <a href="#servicios" class="footer-link">→ Servicios</a>
+            <a href="#blog" class="footer-link">→ Blog</a>
+            <a href="#citas" class="footer-link">→ Citas Médicas</a>
+            <a href="#contacto" class="footer-link">→ Contacto</a>
+          </div>
+
+          <!-- COLUMNA 3: Información de Contacto -->
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="footer-title">Contacto</h5>
+            <div class="contact-info">
+              <p>
+                <i class="fas fa-map-marker-alt"></i>
+                <strong>Dirección:</strong><br />
+                <span class="ms-4"
+                  >Calle 107 #45-23<br />Medellín, Antioquia</span
+                >
+              </p>
+              <p>
+                <i class="fas fa-phone"></i>
+                <strong>Teléfono:</strong><br />
+                <span class="ms-4">+57 304 123 4567</span>
+              </p>
+              <p>
+                <i class="fas fa-envelope"></i>
+                <strong>Email:</strong><br />
+                <span class="ms-4">info@petplusclinica.com</span>
+              </p>
+              <p>
+                <i class="fas fa-clock"></i>
+                <strong>Horario:</strong><br />
+                <span class="ms-4"
+                  >Lun - Vie: 8:00 - 18:00<br />Sáb: 9:00 - 14:00</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <!-- COLUMNA 4: Mapa de Ubicación -->
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="footer-title">Nuestra Ubicación</h5>
+            <div id="map"></div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=6.2476,-75.5658"
+              target="_blank"
+              class="btn btn-warning btn-sm mt-3 w-100"
+            >
+              <i class="fas fa-directions"></i> Cómo Llegar
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="footer-bottom">
+        <div class="container">
+          <p>
+            &copy; 2025 CliniCan Clínica Veterinaria. Todos los derechos
+            reservados. | Diseñado con ❤️
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- Fin FOOTER -->
+
+    
+  </body>
+</html>

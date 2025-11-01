@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel Admin - CliniCan</title>
+    <link rel="icon" href="img/Logo.jpeg" type="image/jpeg" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="Styles_Boos.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navbar Admin -->
+    <div class="admin-navbar">
+      <div
+        class="container-fluid d-flex justify-content-between align-items-center"
+      >
+        <div>
+          <h3>
+            <i class="fas fa-user-shield me-2"></i>
+            Panel de Administración - CliniCan
+          </h3>
+          <small id="adminUserInfo">Sesión: Admin</small>
+        </div>
+        <button class="btn btn-light" onclick="cerrarSesionAdmin()">
+          <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+        </button>
+      </div>
+    </div>
+
+    <div class="container-fluid mt-4 px-4">
+      <div class="row g-4">
+        <!-- Estadísticas -->
+        <div class="col-md-3">
+          <div class="stat-card-admin">
+            <i class="fas fa-calendar-check fa-3x text-danger"></i>
+            <h2 id="totalCitasAdmin">0</h2>
+            <p>Citas Totales</p>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="stat-card-admin">
+            <i class="fas fa-clock fa-3x text-warning"></i>
+            <h2 id="citasPendientesAdmin">0</h2>
+            <p>Pendientes</p>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="stat-card-admin">
+            <i class="fas fa-check-circle fa-3x text-success"></i>
+            <h2 id="citasConfirmadasAdmin">0</h2>
+            <p>Confirmadas</p>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="stat-card-admin">
+            <i class="fas fa-file-medical fa-3x text-info"></i>
+            <h2 id="totalHistorialAdmin">0</h2>
+            <p>Registros Médicos</p>
+          </div>
+        </div>
+
+        <!-- Citas Pendientes de Aprobación -->
+        <div class="col-12">
+          <div class="admin-card">
+            <h4>
+              <i class="fas fa-clock text-warning me-2"></i>
+              Citas Pendientes de Aprobación
+            </h4>
+            <div id="citasPendientesList"></div>
+          </div>
+        </div>
+
+        <!-- Historial Médico -->
+        <div class="col-12">
+          <div class="admin-card">
+            <h4>
+              <i class="fas fa-file-medical-alt text-info me-2"></i>
+              Historial Médico Completo
+            </h4>
+
+            <div class="search-box">
+              <input
+                type="text"
+                id="searchHistorial"
+                class="form-control"
+                placeholder="Buscar por mascota, cliente, diagnóstico..."
+                oninput="buscarHistorial()"
+              />
+              <i class="fas fa-search"></i>
+            </div>
+
+            <ul class="nav nav-pills mb-4">
+              <li class="nav-item">
+                <button
+                  class="nav-link active"
+                  onclick="filtrarHistorial('todos')"
+                >
+                  <i class="fas fa-list me-2"></i>Todos
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  onclick="filtrarHistorial('recientes')"
+                >
+                  <i class="fas fa-clock me-2"></i>Recientes
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  onclick="filtrarHistorial('vacunacion')"
+                >
+                  <i class="fas fa-syringe me-2"></i>Vacunación
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" onclick="filtrarHistorial('cirugia')">
+                  <i class="fas fa-cut me-2"></i>Cirugías
+                </button>
+              </li>
+            </ul>
+
+            <div id="historialList"></div>
+          </div>
+        </div>
+
+        <!-- Todas las Citas -->
+        <div class="col-12">
+          <div class="admin-card">
+            <h4>
+              <i
+                class="fas fa-calendar-alt me-2"
+                style="color: var(--verde-principal)"
+              ></i>
+              Todas las Citas
+            </h4>
+            <div id="todasCitasList"></div>
+          </div>
+        </div>
+
+        <!-- Configuración y Clientes -->
+        <div class="col-md-6">
+          <div class="admin-card">
+            <h4>
+              <i class="fas fa-cog text-secondary me-2"></i>
+              Configuración
+            </h4>
+            <div class="mb-4">
+              <label class="form-label">
+                <i class="fas fa-ban text-danger me-2"></i>
+                Bloquear Día Específico
+              </label>
+              <div class="input-group">
+                <input type="date" class="form-control" id="diaBloquear" />
+                <button class="btn btn-admin-primary" onclick="bloquearDia()">
+                  <i class="fas fa-lock me-2"></i>Bloquear
+                </button>
+              </div>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-3">
+                <i class="fas fa-list me-2"></i>
+                Días Bloqueados:
+              </h6>
+              <div id="diasBloqueadosList"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="admin-card">
+            <h4>
+              <i class="fas fa-users text-info me-2"></i>
+              Clientes Registrados
+            </h4>
+            <div id="clientesList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // ============================================
+      // SISTEMA DE GESTIÓN ADMIN - CLINIVET
+      // ============================================
+
+      // Datos en memoria
+      let citas = [];
+      let usuarios = [];
+      let mascotas = [];
+      let diasBloqueados = [];
+      let historial = [];
+      let filtroHistorialActual = "todos";
+      let busquedaHistorial = "";
+
+      // Paginación
+      let paginaHistorialActual = 1;
+      let paginaCitasActual = 1;
+      let paginaClientesActual = 1;
+      const registrosPorPagina = 5;
+
+      // Inicialización
+      document.addEventListener("DOMContentLoaded", function () {
+        verificarSesionAdmin();
+        cargarDatosIniciales();
+        actualizarPanel();
+
+        setInterval(() => {
+          cargarDatosIniciales();
+          actualizarPanel();
+        }, 5000);
+      });
+
+      function verificarSesionAdmin() {
+        const adminLogueado = sessionStorage.getItem("adminLogueado");
+        if (!adminLogueado) {
+          sessionStorage.setItem(
+            "adminLogueado",
+            JSON.stringify({ nombre: "Admin Demo" })
+          );
+        }
+        const adminInfo = JSON.parse(sessionStorage.getItem("adminLogueado"));
+        document.getElementById(
+          "adminUserInfo"
+        ).textContent = `Sesión: ${adminInfo.nombre}`;
+      }
+
+      function cerrarSesionAdmin() {
+        if (confirm("¿Estás seguro de cerrar sesión?")) {
+          sessionStorage.removeItem("adminLogueado");
+          window.location.href = "index.html";
+        }
+      }
+
+      function cargarDatosIniciales() {
+        citas = JSON.parse(localStorage.getItem("citas") || "[]");
+        usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+        mascotas = JSON.parse(localStorage.getItem("mascotas") || "[]");
+        diasBloqueados = JSON.parse(
+          localStorage.getItem("diasBloqueados") || "[]"
+        );
+        historial = JSON.parse(localStorage.getItem("historial") || "[]");
+
+        if (historial.length === 0) {
+          historial = [
+            {
+              id: 1,
+              mascota_id: 1,
+              cita_id: 1,
+              mascota_nombre: "Max",
+              mascota_especie: "Perro",
+              cliente_nombre: "Juan Pérez",
+              fecha: "2024-10-15",
+              tipo: "Vacunación",
+              descripcion:
+                "Aplicación de vacuna antirrábica. Paciente en buen estado general, sin reacciones adversas.",
+              peso: 25.5,
+              temperatura: 38.2,
+              medicamentos: "Vacuna antirrábica 1ml",
+              observaciones:
+                "Próxima dosis en 1 año. Mantener reposo por 24 horas.",
+              veterinario: "Dr. García",
+              fechaRegistro: "2024-10-15T10:30:00",
+            },
+            {
+              id: 2,
+              mascota_id: 2,
+              cita_id: 2,
+              mascota_nombre: "Luna",
+              mascota_especie: "Gato",
+              cliente_nombre: "María González",
+              fecha: "2024-10-20",
+              tipo: "Consulta General",
+              descripcion:
+                "Revisión general. Paciente presenta inflamación leve en oído izquierdo. Se diagnostica otitis externa.",
+              peso: 4.2,
+              temperatura: 38.8,
+              medicamentos:
+                "Gotas óticas antibióticas cada 12 horas por 7 días",
+              observaciones: "Control en 7 días. Evitar que se rasque el oído.",
+              veterinario: "Dra. Martínez",
+              fechaRegistro: "2024-10-20T15:45:00",
+            },
+          ];
+          localStorage.setItem("historial", JSON.stringify(historial));
+        }
+
+        if (citas.length === 0) {
+          citas = [
+            {
+              id: 1,
+              mascota: "Max",
+              especie: "Perro",
+              raza: "Golden Retriever",
+              cliente: "Juan Pérez",
+              email: "juan@email.com",
+              telefono: "555-1234",
+              servicio: "Consulta General",
+              fecha: "2024-10-30",
+              hora: "10:00",
+              estado: "Pendiente",
+              comentarios: "Primera consulta",
+              fechaCreacion: new Date().toISOString(),
+            },
+          ];
+          localStorage.setItem("citas", JSON.stringify(citas));
+        }
+      }
+
+      function guardarCitas() {
+        localStorage.setItem("citas", JSON.stringify(citas));
+      }
+
+      function guardarHistorial() {
+        localStorage.setItem("historial", JSON.stringify(historial));
+      }
+
+      function guardarDiasBloqueados() {
+        localStorage.setItem("diasBloqueados", JSON.stringify(diasBloqueados));
+      }
+
+      function actualizarPanel() {
+        actualizarEstadisticas();
+        mostrarCitasPendientes();
+        mostrarHistorialMedico();
+        mostrarTodasCitas();
+        mostrarClientes();
+        mostrarDiasBloqueados();
+      }
+
+      function actualizarEstadisticas() {
+        document.getElementById("totalCitasAdmin").textContent = citas.length;
+        document.getElementById("citasPendientesAdmin").textContent =
+          citas.filter((c) => c.estado === "Pendiente").length;
+        document.getElementById("citasConfirmadasAdmin").textContent =
+          citas.filter((c) => c.estado === "Confirmada").length;
+        document.getElementById("totalHistorialAdmin").textContent =
+          historial.length;
+      }
+
+      function mostrarCitasPendientes() {
+        const pendientes = citas.filter((c) => c.estado === "Pendiente");
+        const container = document.getElementById("citasPendientesList");
+
+        if (pendientes.length === 0) {
+          container.innerHTML = `
+            <div class="alert alert-info">
+              <i class="fas fa-info-circle me-2"></i>
+              No hay citas pendientes de aprobación
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = pendientes
+          .map(
+            (cita) => `
+          <div class="cita-card mb-3">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <h5 class="mb-2">
+                  <i class="fas fa-paw text-primary me-2"></i>
+                  ${cita.mascota} - ${cita.especie}
+                </h5>
+                <p class="mb-1"><strong>Cliente:</strong> ${
+                  cita.cliente
+                } | <strong>Tel:</strong> ${cita.telefono}</p>
+                <p class="mb-1"><strong>Email:</strong> ${cita.email}</p>
+                <p class="mb-1"><strong>Servicio:</strong> ${cita.servicio}</p>
+                <p class="mb-1"><strong>Fecha:</strong> ${formatearFecha(
+                  cita.fecha
+                )} a las ${cita.hora}</p>
+                
+                ${
+                  cita.raza
+                    ? `
+                  <div class="mascota-info-box">
+                    <h6 class="mb-2"><i class="fas fa-info-circle me-2"></i>Información de la Mascota</h6>
+                    <p class="mb-1"><strong>Raza:</strong> ${cita.raza}</p>
+                    ${
+                      cita.mascota_edad
+                        ? `<p class="mb-0"><strong>Edad:</strong> ${cita.mascota_edad}</p>`
+                        : ""
+                    }
+                  </div>
+                `
+                    : ""
+                }
+                
+                ${
+                  cita.comentarios
+                    ? `
+                  <div class="alert alert-info mt-3 mb-0">
+                    <strong><i class="fas fa-comment-medical me-2"></i>Comentarios del cliente:</strong>
+                    <p class="mb-0 mt-2">${cita.comentarios}</p>
+                  </div>
+                `
+                    : ""
+                }
+              </div>
+              <div class="col-md-4 text-end">
+                <button class="btn btn-success mb-2 w-100" onclick="aprobarCita(${
+                  cita.id
+                })">
+                  <i class="fas fa-check me-2"></i>Aprobar
+                </button>
+                <button class="btn btn-danger mb-2 w-100" onclick="rechazarCita(${
+                  cita.id
+                })">
+                  <i class="fas fa-times me-2"></i>Rechazar
+                </button>
+                <button class="btn btn-info w-100" onclick="verDetallesCita(${
+                  cita.id
+                })">
+                  <i class="fas fa-eye me-2"></i>Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function aprobarCita(id) {
+        const cita = citas.find((c) => c.id === id);
+        if (cita && confirm(`¿Aprobar cita de ${cita.mascota}?`)) {
+          cita.estado = "Confirmada";
+          cita.fechaConfirmacion = new Date().toISOString();
+          guardarCitas();
+          actualizarPanel();
+          mostrarNotificacion("✅ Cita aprobada exitosamente", "success");
+        }
+      }
+
+      function rechazarCita(id) {
+        const cita = citas.find((c) => c.id === id);
+        if (cita) {
+          const motivo = prompt("Motivo del rechazo (opcional):");
+          if (motivo !== null) {
+            cita.estado = "Rechazada";
+            cita.motivoRechazo = motivo || "No especificado";
+            cita.fechaRechazo = new Date().toISOString();
+            guardarCitas();
+            actualizarPanel();
+            mostrarNotificacion("Cita rechazada", "warning");
+          }
+        }
+      }
+
+      function mostrarHistorialMedico() {
+        let historialFiltrado = [...historial];
+
+        if (busquedaHistorial) {
+          const busqueda = busquedaHistorial.toLowerCase();
+          historialFiltrado = historialFiltrado.filter(
+            (h) =>
+              h.mascota_nombre?.toLowerCase().includes(busqueda) ||
+              h.cliente_nombre?.toLowerCase().includes(busqueda) ||
+              h.tipo?.toLowerCase().includes(busqueda) ||
+              h.descripcion?.toLowerCase().includes(busqueda) ||
+              h.veterinario?.toLowerCase().includes(busqueda)
+          );
+        }
+
+        switch (filtroHistorialActual) {
+          case "recientes":
+            const hace30dias = new Date();
+            hace30dias.setDate(hace30dias.getDate() - 30);
+            historialFiltrado = historialFiltrado.filter(
+              (h) => new Date(h.fecha) >= hace30dias
+            );
+            break;
+          case "vacunacion":
+            historialFiltrado = historialFiltrado.filter(
+              (h) => h.tipo === "Vacunación"
+            );
+            break;
+          case "cirugia":
+            historialFiltrado = historialFiltrado.filter(
+              (h) => h.tipo === "Cirugía"
+            );
+            break;
+        }
+
+        historialFiltrado.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+        const container = document.getElementById("historialList");
+
+        if (historialFiltrado.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-folder-open"></i>
+              <p>No se encontraron registros médicos</p>
+            </div>
+          `;
+          return;
+        }
+
+        const totalPaginas = Math.ceil(
+          historialFiltrado.length / registrosPorPagina
+        );
+        const inicio = (paginaHistorialActual - 1) * registrosPorPagina;
+        const fin = inicio + registrosPorPagina;
+        const historialPaginado = historialFiltrado.slice(inicio, fin);
+
+        container.innerHTML = historialPaginado
+          .map(
+            (registro) => `
+          <div class="historial-card">
+            <div class="historial-header">
+              <div>
+                <h5 class="mb-1">
+                  <i class="fas fa-paw text-primary me-2"></i>
+                  ${registro.mascota_nombre || "Mascota"} - ${
+              registro.mascota_especie || "N/A"
+            }
+                </h5>
+                <small class="text-muted">
+                  <i class="fas fa-user me-1"></i>
+                  Cliente: ${registro.cliente_nombre || "N/A"}
+                </small>
+              </div>
+              <span class="historial-badge">
+                ${registro.tipo}
+              </span>
+            </div>
+
+            ${
+              registro.descripcion
+                ? `
+              <div class="historial-section">
+                <div class="historial-section-title">
+                  <i class="fas fa-notes-medical"></i>
+                  Diagnóstico / Descripción
+                </div>
+                <div class="historial-content">
+                  ${registro.descripcion}
+                </div>
+              </div>
+            `
+                : ""
+            }
+
+            ${
+              registro.medicamentos
+                ? `
+              <div class="historial-section">
+                <div class="historial-section-title">
+                  <i class="fas fa-pills"></i>
+                  Medicamentos Recetados
+                </div>
+                <div class="historial-content">
+                  ${registro.medicamentos}
+                </div>
+              </div>
+            `
+                : ""
+            }
+
+            ${
+              registro.observaciones
+                ? `
+              <div class="historial-section">
+                <div class="historial-section-title">
+                  <i class="fas fa-clipboard-list"></i>
+                  Observaciones / Recomendaciones
+                </div>
+                <div class="historial-content">
+                  ${registro.observaciones}
+                </div>
+              </div>
+            `
+                : ""
+            }
+
+            <div class="historial-meta">
+              <div class="historial-meta-item">
+                <i class="fas fa-calendar"></i>
+                <span>${formatearFecha(registro.fecha)}</span>
+              </div>
+              ${
+                registro.peso
+                  ? `
+                <div class="historial-meta-item">
+                  <i class="fas fa-weight"></i>
+                  <span>Peso: ${registro.peso} kg</span>
+                </div>
+              `
+                  : ""
+              }
+              ${
+                registro.temperatura
+                  ? `
+                <div class="historial-meta-item">
+                  <i class="fas fa-thermometer-half"></i>
+                  <span>Temp: ${registro.temperatura}°C</span>
+                </div>
+              `
+                  : ""
+              }
+              <div class="historial-meta-item">
+                <i class="fas fa-user-md"></i>
+                <span>${registro.veterinario}</span>
+              </div>
+            </div>
+
+            <div class="text-end mt-3">
+              <button class="btn btn-sm btn-outline-primary" onclick="verHistorialDetalle(${
+                registro.id
+              })">
+                <i class="fas fa-eye me-2"></i>Ver Detalles Completos
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="eliminarHistorial(${
+                registro.id
+              })">
+                <i class="fas fa-trash me-2"></i>Eliminar
+              </button>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+
+        if (totalPaginas > 1) {
+          container.innerHTML += crearPaginacion(
+            paginaHistorialActual,
+            totalPaginas,
+            historialFiltrado.length,
+            "historial"
+          );
+        }
+      }
+
+      function filtrarHistorial(filtro) {
+        filtroHistorialActual = filtro;
+        paginaHistorialActual = 1;
+        document.querySelectorAll(".nav-pills .nav-link").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+        event.target.classList.add("active");
+        mostrarHistorialMedico();
+      }
+
+      function buscarHistorial() {
+        busquedaHistorial = document.getElementById("searchHistorial").value;
+        paginaHistorialActual = 1;
+        mostrarHistorialMedico();
+      }
+
+      function cambiarPaginaHistorial(direccion) {
+        paginaHistorialActual += direccion;
+        mostrarHistorialMedico();
+        document
+          .getElementById("historialList")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function irAPaginaHistorial(pagina) {
+        paginaHistorialActual = pagina;
+        mostrarHistorialMedico();
+        document
+          .getElementById("historialList")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function verHistorialDetalle(id) {
+        const registro = historial.find((h) => h.id === id);
+        if (!registro) return;
+
+        const detalles = `
+═══════════════════════════════════════
+         HISTORIAL MÉDICO COMPLETO
+═══════════════════════════════════════
+
+ID Registro: #${registro.id}
+
+─────────── INFORMACIÓN PACIENTE ───────────
+Mascota: ${registro.mascota_nombre || "N/A"}
+Especie: ${registro.mascota_especie || "N/A"}
+Cliente: ${registro.cliente_nombre || "N/A"}
+
+─────────── DATOS DE LA CONSULTA ───────────
+Tipo de Procedimiento: ${registro.tipo}
+Fecha de Atención: ${formatearFecha(registro.fecha)}
+Veterinario: ${registro.veterinario}
+
+─────────── SIGNOS VITALES ───────────
+${registro.peso ? `Peso: ${registro.peso} kg` : "Peso: No registrado"}
+${
+  registro.temperatura
+    ? `Temperatura: ${registro.temperatura}°C`
+    : "Temperatura: No registrada"
+}
+
+─────────── DIAGNÓSTICO ───────────
+${registro.descripcion || "No especificado"}
+
+─────────── MEDICAMENTOS ───────────
+${registro.medicamentos || "No se recetaron medicamentos"}
+
+─────────── OBSERVACIONES ───────────
+${registro.observaciones || "Sin observaciones adicionales"}
+
+─────────── INFORMACIÓN DEL REGISTRO ───────────
+Registrado el: ${formatearFechaCompleta(registro.fechaRegistro)}
+${registro.cita_id ? `Relacionado con Cita ID: #${registro.cita_id}` : ""}
+
+═══════════════════════════════════════
+        `;
+
+        alert(detalles);
+      }
+
+      function eliminarHistorial(id) {
+        const registro = historial.find((h) => h.id === id);
+        if (!registro) return;
+
+        if (
+          confirm(
+            `¿Estás seguro de eliminar el registro médico de ${registro.mascota_nombre}?\n\nEsta acción no se puede deshacer.`
+          )
+        ) {
+          historial = historial.filter((h) => h.id !== id);
+          guardarHistorial();
+          actualizarPanel();
+          mostrarNotificacion("Registro eliminado del historial", "info");
+        }
+      }
+
+      function mostrarTodasCitas() {
+        const container = document.getElementById("todasCitasList");
+
+        if (citas.length === 0) {
+          container.innerHTML = `
+            <div class="alert alert-info">
+              <i class="fas fa-info-circle me-2"></i>
+              No hay citas registradas
+            </div>
+          `;
+          return;
+        }
+
+        const citasOrdenadas = [...citas].sort(
+          (a, b) =>
+            new Date(b.fecha + " " + b.hora) - new Date(a.fecha + " " + a.hora)
+        );
+
+        const totalPaginas = Math.ceil(
+          citasOrdenadas.length / registrosPorPagina
+        );
+        const inicio = (paginaCitasActual - 1) * registrosPorPagina;
+        const fin = inicio + registrosPorPagina;
+        const citasPaginadas = citasOrdenadas.slice(inicio, fin);
+
+        container.innerHTML = citasPaginadas
+          .map((cita) => {
+            const estadoConfig = {
+              Pendiente: { class: "warning", icon: "clock" },
+              Confirmada: { class: "success", icon: "check-circle" },
+              Rechazada: { class: "danger", icon: "times-circle" },
+              Completada: { class: "info", icon: "check-double" },
+            };
+            const config = estadoConfig[cita.estado] || {
+              class: "secondary",
+              icon: "question",
+            };
+
+            return `
+            <div class="cita-card mb-3">
+              <div class="row align-items-center">
+                <div class="col-md-9">
+                  <div class="d-flex align-items-center mb-2">
+                    <h5 class="mb-0 me-3">
+                      <i class="fas fa-paw text-primary me-2"></i>
+                      ${cita.mascota} - ${cita.especie}
+                    </h5>
+                    <span class="badge bg-${config.class}">
+                      <i class="fas fa-${config.icon} me-1"></i>${cita.estado}
+                    </span>
+                  </div>
+                  <p class="mb-1"><strong>Cliente:</strong> ${
+                    cita.cliente
+                  } | <strong>Tel:</strong> ${cita.telefono}</p>
+                  <p class="mb-1"><strong>Servicio:</strong> ${
+                    cita.servicio
+                  }</p>
+                  <p class="mb-1"><strong>Fecha:</strong> ${formatearFecha(
+                    cita.fecha
+                  )} a las ${cita.hora}</p>
+                  
+                  ${
+                    cita.raza
+                      ? `
+                    <div class="mascota-info-box">
+                      <p class="mb-0"><strong><i class="fas fa-info-circle me-2"></i>Raza:</strong> ${cita.raza}</p>
+                    </div>
+                  `
+                      : ""
+                  }
+                  
+                  ${
+                    cita.comentarios
+                      ? `
+                    <div class="alert alert-light mt-2 mb-0 py-2">
+                      <small><strong><i class="fas fa-comment me-2"></i>Comentarios:</strong> ${cita.comentarios}</small>
+                    </div>
+                  `
+                      : ""
+                  }
+                </div>
+                <div class="col-md-3 text-end">
+                  ${
+                    cita.estado === "Confirmada"
+                      ? `
+                    <button class="btn btn-sm btn-success mb-2 w-100" onclick="completarCita(${cita.id})">
+                      <i class="fas fa-check-double me-2"></i>Completar
+                    </button>
+                  `
+                      : ""
+                  }
+                  ${
+                    cita.estado === "Completada"
+                      ? `
+                    <button class="btn btn-sm btn-primary mb-2 w-100" onclick="agregarHistorialCita(${cita.id})">
+                      <i class="fas fa-file-medical me-2"></i>Agregar Historial
+                    </button>
+                  `
+                      : ""
+                  }
+                  <button class="btn btn-sm btn-danger w-100" onclick="eliminarCita(${
+                    cita.id
+                  })">
+                    <i class="fas fa-trash me-2"></i>Eliminar
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+          })
+          .join("");
+
+        if (totalPaginas > 1) {
+          container.innerHTML += crearPaginacion(
+            paginaCitasActual,
+            totalPaginas,
+            citasOrdenadas.length,
+            "citas"
+          );
+        }
+      }
+
+      function cambiarPaginaCitas(direccion) {
+        paginaCitasActual += direccion;
+        mostrarTodasCitas();
+        document
+          .getElementById("todasCitasList")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function irAPaginaCitas(pagina) {
+        paginaCitasActual = pagina;
+        mostrarTodasCitas();
+        document
+          .getElementById("todasCitasList")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function completarCita(id) {
+        const cita = citas.find((c) => c.id === id);
+        if (
+          cita &&
+          confirm(`¿Marcar como completada la cita de ${cita.mascota}?`)
+        ) {
+          cita.estado = "Completada";
+          cita.fechaCompletada = new Date().toISOString();
+          guardarCitas();
+          actualizarPanel();
+          mostrarNotificacion(
+            "Cita completada. Ahora puedes agregar información al historial médico",
+            "success"
+          );
+        }
+      }
+
+      function eliminarCita(id) {
+        const cita = citas.find((c) => c.id === id);
+        if (
+          cita &&
+          confirm(`¿Estás seguro de eliminar la cita de ${cita.mascota}?`)
+        ) {
+          citas = citas.filter((c) => c.id !== id);
+          guardarCitas();
+          actualizarPanel();
+          mostrarNotificacion("Cita eliminada", "info");
+        }
+      }
+
+      function verDetallesCita(id) {
+        const cita = citas.find((c) => c.id === id);
+        if (!cita) return;
+
+        const detalles = `
+═══════════════════════════════════════
+         DETALLES DE LA CITA
+═══════════════════════════════════════
+
+ID Cita: #${cita.id}
+
+─────────── CLIENTE ───────────
+Nombre: ${cita.cliente}
+Email: ${cita.email}
+Teléfono: ${cita.telefono}
+
+─────────── MASCOTA ───────────
+Nombre: ${cita.mascota}
+Especie: ${cita.especie}
+Raza: ${cita.raza || "No especificada"}
+
+─────────── CITA ───────────
+Servicio: ${cita.servicio}
+Fecha: ${formatearFecha(cita.fecha)}
+Hora: ${cita.hora}
+Estado: ${cita.estado}
+
+${
+  cita.comentarios
+    ? `─────────── COMENTARIOS ───────────\n${cita.comentarios}\n`
+    : ""
+}
+${
+  cita.motivoRechazo
+    ? `─────────── MOTIVO DE RECHAZO ───────────\n${cita.motivoRechazo}\n`
+    : ""
+}
+
+─────────── REGISTRO ───────────
+Creada: ${formatearFechaCompleta(cita.fechaCreacion)}
+${
+  cita.fechaConfirmacion
+    ? `Confirmada: ${formatearFechaCompleta(cita.fechaConfirmacion)}`
+    : ""
+}
+${
+  cita.fechaCompletada
+    ? `Completada: ${formatearFechaCompleta(cita.fechaCompletada)}`
+    : ""
+}
+
+═══════════════════════════════════════
+        `;
+
+        alert(detalles);
+      }
+
+      function agregarHistorialCita(citaId) {
+        const cita = citas.find((c) => c.id === citaId);
+        if (!cita) return;
+
+        const modal = `
+          <div class="modal fade" id="modalHistorial" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white;">
+                  <h5 class="modal-title">
+                    <i class="fas fa-file-medical me-2"></i>
+                    Agregar al Historial Médico
+                  </h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="alert alert-info">
+                    <strong>Paciente:</strong> ${cita.mascota} (${
+          cita.especie
+        })<br>
+                    <strong>Cliente:</strong> ${cita.cliente}<br>
+                    <strong>Servicio:</strong> ${cita.servicio}<br>
+                    <strong>Fecha de atención:</strong> ${formatearFecha(
+                      cita.fecha
+                    )}
+                  </div>
+
+                  <form id="formHistorial" onsubmit="guardarHistorialMedico(event, ${citaId})">
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Tipo de Procedimiento *</label>
+                      <select class="form-select" id="tipoHistorial" required>
+                        <option value="">-- Selecciona --</option>
+                        <option value="Consulta General">Consulta General</option>
+                        <option value="Vacunación">Vacunación</option>
+                        <option value="Desparasitación">Desparasitación</option>
+                        <option value="Cirugía">Cirugía</option>
+                        <option value="Examen de Laboratorio">Examen de Laboratorio</option>
+                        <option value="Radiografía">Radiografía</option>
+                        <option value="Ecografía">Ecografía</option>
+                        <option value="Tratamiento">Tratamiento</option>
+                        <option value="Otro">Otro</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Diagnóstico / Descripción *</label>
+                      <textarea class="form-control" id="descripcionHistorial" rows="5" required
+                        placeholder="Describe el diagnóstico, tratamiento aplicado, observaciones, etc."></textarea>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Peso (kg)</label>
+                        <input type="number" class="form-control" id="pesoHistorial" step="0.1" placeholder="Ej: 25.5">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Temperatura (°C)</label>
+                        <input type="number" class="form-control" id="temperaturaHistorial" step="0.1" placeholder="Ej: 38.5">
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Medicamentos Recetados</label>
+                      <textarea class="form-control" id="medicamentosHistorial" rows="2"
+                        placeholder="Lista de medicamentos y dosificación"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Próxima Cita / Observaciones</label>
+                      <textarea class="form-control" id="observacionesHistorial" rows="2"
+                        placeholder="Recomendaciones, próximas visitas, cuidados especiales, etc."></textarea>
+                    </div>
+
+                    <div class="text-end">
+                      <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">
+                        Cancelar
+                      </button>
+                      <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save me-2"></i>Guardar Historial
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        const modalAnterior = document.getElementById("modalHistorial");
+        if (modalAnterior) modalAnterior.remove();
+
+        document.body.insertAdjacentHTML("beforeend", modal);
+
+        setTimeout(() => {
+          const tipoSelect = document.getElementById("tipoHistorial");
+          if (cita.servicio && tipoSelect) {
+            tipoSelect.value = cita.servicio;
+          }
+        }, 100);
+
+        const modalElement = new bootstrap.Modal(
+          document.getElementById("modalHistorial")
+        );
+        modalElement.show();
+      }
+
+      function guardarHistorialMedico(event, citaId) {
+        event.preventDefault();
+
+        const cita = citas.find((c) => c.id === citaId);
+        if (!cita) return;
+
+        const nuevoHistorial = {
+          id: Date.now(),
+          mascota_id: cita.mascota_id || citaId,
+          cita_id: citaId,
+          mascota_nombre: cita.mascota,
+          mascota_especie: cita.especie,
+          cliente_nombre: cita.cliente,
+          fecha: cita.fecha,
+          tipo: document.getElementById("tipoHistorial").value,
+          descripcion: document.getElementById("descripcionHistorial").value,
+          peso: document.getElementById("pesoHistorial").value || null,
+          temperatura:
+            document.getElementById("temperaturaHistorial").value || null,
+          medicamentos:
+            document.getElementById("medicamentosHistorial").value || "",
+          observaciones:
+            document.getElementById("observacionesHistorial").value || "",
+          veterinario: JSON.parse(sessionStorage.getItem("adminLogueado"))
+            .nombre,
+          fechaRegistro: new Date().toISOString(),
+        };
+
+        historial.push(nuevoHistorial);
+        guardarHistorial();
+
+        const modal = bootstrap.Modal.getInstance(
+          document.getElementById("modalHistorial")
+        );
+        modal.hide();
+
+        setTimeout(() => {
+          document.getElementById("modalHistorial").remove();
+        }, 500);
+
+        actualizarPanel();
+        mostrarNotificacion(
+          "✅ Historial médico guardado exitosamente",
+          "success"
+        );
+      }
+
+      function bloquearDia() {
+        const fecha = document.getElementById("diaBloquear").value;
+        if (!fecha) {
+          alert("Por favor selecciona una fecha");
+          return;
+        }
+        if (diasBloqueados.includes(fecha)) {
+          alert("Este día ya está bloqueado");
+          return;
+        }
+        diasBloqueados.push(fecha);
+        guardarDiasBloqueados();
+        mostrarDiasBloqueados();
+        document.getElementById("diaBloquear").value = "";
+        mostrarNotificacion("Día bloqueado exitosamente", "success");
+      }
+
+      function desbloquearDia(fecha) {
+        if (confirm(`¿Desbloquear el día ${formatearFecha(fecha)}?`)) {
+          diasBloqueados = diasBloqueados.filter((d) => d !== fecha);
+          guardarDiasBloqueados();
+          mostrarDiasBloqueados();
+          mostrarNotificacion("Día desbloqueado", "info");
+        }
+      }
+
+      function mostrarDiasBloqueados() {
+        const container = document.getElementById("diasBloqueadosList");
+        if (diasBloqueados.length === 0) {
+          container.innerHTML =
+            '<p class="text-muted">No hay días bloqueados</p>';
+          return;
+        }
+        container.innerHTML = diasBloqueados
+          .sort()
+          .map(
+            (fecha) => `
+          <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-light rounded">
+            <span><i class="fas fa-calendar-times text-danger me-2"></i>${formatearFecha(
+              fecha
+            )}</span>
+            <button class="btn btn-sm btn-outline-danger" onclick="desbloquearDia('${fecha}')">
+              <i class="fas fa-unlock"></i> Desbloquear
+            </button>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function mostrarClientes() {
+        const container = document.getElementById("clientesList");
+        const clientesMap = new Map();
+
+        citas.forEach((cita) => {
+          if (!clientesMap.has(cita.email)) {
+            clientesMap.set(cita.email, {
+              nombre: cita.cliente,
+              email: cita.email,
+              telefono: cita.telefono,
+              citas: 1,
+            });
+          } else {
+            clientesMap.get(cita.email).citas++;
+          }
+        });
+
+        const clientes = Array.from(clientesMap.values());
+
+        if (clientes.length === 0) {
+          container.innerHTML =
+            '<p class="text-muted">No hay clientes registrados</p>';
+          return;
+        }
+
+        const totalPaginas = Math.ceil(clientes.length / registrosPorPagina);
+        const inicio = (paginaClientesActual - 1) * registrosPorPagina;
+        const fin = inicio + registrosPorPagina;
+        const clientesPaginados = clientes.slice(inicio, fin);
+
+        container.innerHTML = `
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white;">
+                <tr>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Teléfono</th>
+                  <th>Citas</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${clientesPaginados
+                  .map(
+                    (cliente) => `
+                  <tr>
+                    <td><i class="fas fa-user text-primary me-2"></i>${cliente.nombre}</td>
+                    <td>${cliente.email}</td>
+                    <td>${cliente.telefono}</td>
+                    <td><span class="badge bg-primary">${cliente.citas}</span></td>
+                  </tr>
+                `
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+
+        if (totalPaginas > 1) {
+          container.innerHTML += crearPaginacion(
+            paginaClientesActual,
+            totalPaginas,
+            clientes.length,
+            "clientes"
+          );
+        }
+      }
+
+      function cambiarPaginaClientes(direccion) {
+        paginaClientesActual += direccion;
+        mostrarClientes();
+        document
+          .getElementById("clientesList")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function irAPaginaClientes(pagina) {
+        paginaClientesActual = pagina;
+        mostrarClientes();
+        document
+          .getElementById("clientesList")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function formatearFecha(fecha) {
+        const date = new Date(fecha + "T00:00:00");
+        const opciones = {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          weekday: "long",
+        };
+        return date.toLocaleDateString("es-ES", opciones);
+      }
+
+      function formatearFechaCompleta(fecha) {
+        const date = new Date(fecha);
+        const opciones = {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        };
+        return date.toLocaleDateString("es-ES", opciones);
+      }
+
+      function mostrarNotificacion(mensaje, tipo) {
+        const alerta = document.createElement("div");
+        alerta.className = `alert alert-${tipo} position-fixed top-0 end-0 m-3`;
+        alerta.style.zIndex = "9999";
+        alerta.style.minWidth = "300px";
+        alerta.style.boxShadow = "0 4px 15px rgba(0,0,0,0.2)";
+        alerta.innerHTML = `
+          <i class="fas fa-${
+            tipo === "success"
+              ? "check-circle"
+              : tipo === "warning"
+              ? "exclamation-triangle"
+              : "info-circle"
+          } me-2"></i>
+          ${mensaje}
+        `;
+        document.body.appendChild(alerta);
+        setTimeout(() => alerta.remove(), 4000);
+      }
+
+      function crearPaginacion(
+        paginaActual,
+        totalPaginas,
+        totalRegistros,
+        tipo
+      ) {
+        const inicio = (paginaActual - 1) * registrosPorPagina + 1;
+        const fin = Math.min(paginaActual * registrosPorPagina, totalRegistros);
+
+        let paginasAMostrar = [];
+        const maxPaginasVisibles = 5;
+
+        if (totalPaginas <= maxPaginasVisibles) {
+          paginasAMostrar = Array.from(
+            { length: totalPaginas },
+            (_, i) => i + 1
+          );
+        } else {
+          if (paginaActual <= 3) {
+            paginasAMostrar = [1, 2, 3, 4, "...", totalPaginas];
+          } else if (paginaActual >= totalPaginas - 2) {
+            paginasAMostrar = [
+              1,
+              "...",
+              totalPaginas - 3,
+              totalPaginas - 2,
+              totalPaginas - 1,
+              totalPaginas,
+            ];
+          } else {
+            paginasAMostrar = [
+              1,
+              "...",
+              paginaActual - 1,
+              paginaActual,
+              paginaActual + 1,
+              "...",
+              totalPaginas,
+            ];
+          }
+        }
+
+        return `
+          <div class="pagination-container">
+            <div class="pagination-info">
+              Mostrando ${inicio}-${fin} de ${totalRegistros} registros
+            </div>
+            <div class="pagination-buttons">
+              <button 
+                onclick="cambiarPagina${
+                  tipo.charAt(0).toUpperCase() + tipo.slice(1)
+                }(-1)" 
+                ${paginaActual === 1 ? "disabled" : ""}
+              >
+                <i class="fas fa-chevron-left"></i> Anterior
+              </button>
+              
+              <div class="page-numbers">
+                ${paginasAMostrar
+                  .map((num) => {
+                    if (num === "...") {
+                      return '<span style="padding: 0 5px; color: #6c757d;">...</span>';
+                    }
+                    return `
+                    <div 
+                      class="page-number ${
+                        num === paginaActual ? "active" : ""
+                      }" 
+                      onclick="irAPagina${
+                        tipo.charAt(0).toUpperCase() + tipo.slice(1)
+                      }(${num})"
+                    >
+                      ${num}
+                    </div>
+                  `;
+                  })
+                  .join("")}
+              </div>
+              
+              <button 
+                onclick="cambiarPagina${
+                  tipo.charAt(0).toUpperCase() + tipo.slice(1)
+                }(1)" 
+                ${paginaActual === totalPaginas ? "disabled" : ""}
+              >
+                Siguiente <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }
+    </script>
+  </body>
+</html>

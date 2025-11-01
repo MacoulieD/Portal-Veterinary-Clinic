@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CliniVet</title>
+    <link rel="icon" href="img/Logo.jpeg" type="jpeg" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="Styles_Boos.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/313d8d0373.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!--fila menu-->
+    <header class="fixed-top">
+      <div class="col-12">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary py-1">
+          <div class="container-fluid">
+            <a class="navbar-brand mx-5" href="login-admin.html"
+              ><img src="img/LOGOCliniVet.svg" alt="imagen logo" width="100"
+            /></a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div
+              class="collapse navbar-collapse ms-auto"
+              id="navbarNavDropdown"
+            >
+              <ul class="navbar-nav m-2 ms-auto mx-5">
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-secondary text-white active mx-lg-5 nav-animado"
+                    aria-current="page"
+                    href="login.html"
+                    >CITAS MÉDICAS</a
+                  >
+                </li>
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle mx-lg-5 text-white nav-animado"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    SERVICIOS
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a class="dropdown-item" href="#">Consulta General</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Vacunación Anual</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Corte de Pelo y Baño</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#"
+                        >Radiografía (Rayos X)</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Ecografía</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Laboratorio Clínico</a>
+                  </ul>
+                </li>
+                <li class="nav-item mx-lg-5">
+                  <a class="nav-link rounded text-white nav-animado" href="blog.html"
+                    >BLOG</a
+                  >
+                </li>
+                <li class="nav-item mx-lg-5">
+                  <a class="nav-link text-white nav-animado" href="#"
+                    >CONTACTO</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!--Fin fila menu-->
+
+    <!-- Alto del carusel -->
+    <div style="height: 110px"></div>
+
+    <!-- Contenedor principal -->
+    <div class="container">
+      <!-- Carrusel de ofertas Principal-->
+      <div id="miCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#miCarousel"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#miCarousel"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+        </div>
+
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="row g-0 vh-100">
+              <div
+                class="col-md-6 bg-info text-white d-flex align-items-center justify-content-center p-5"
+              >
+                <div>
+                  <h4 class="mb-3">TODOS LOS MIÉRCOLES</h4>
+                  <h1 class="display-4 fw-bold">
+                    20% DE DESCUENTO EN VACUNACIÓN
+                  </h1>
+                  <a href="login.html" class="btn btn-outline-light mt-4"
+                    >AGENDAR UNA CITA</a
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-6 d-none d-md-block">
+                <img
+                  src="img/bannerC.png"
+                  class="d-block w-100 h-100 object-fit-cover"
+                  alt="Oferta Vacunación"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item">
+            <div class="row g-0 vh-100">
+              <div
+                class="col-md-6 bg-success text-white d-flex align-items-center justify-content-center p-5"
+              >
+                <div>
+                  <h1 class="display-5">¡ADOPTA!</h1>
+                  <p class="lead">
+                    LA ADOPCIÓN ES UN ACTO DE AMOR Y RESPONSABILIDAD. <br />
+                    AL ADOPTAR, LE DAS UNA SEGUNDA OPORTUNIDAD A UN ANIMAL
+                    NECESITADO Y OBTIENES UN COMPAÑERO LEAL.
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6 d-none d-md-block">
+                <img
+                  src="img/bannerD.png"
+                  class="d-block w-100 h-100 object-fit-cover"
+                  alt="Nueva Sede"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#miCarousel"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#miCarousel"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <!-- Fin Carrusel de ofertas Principal-->
+
+      <!-- Sección de Agendamiento -->
+      <section class="bg-light py-5">
+        <div class="container text-center">
+          <h2 class="mb-2 fw-normal">
+            AGENDAMIENTO EN LÍNEA: EL CUIDADO DE TU MASCOTA LO HACEMOS MÁS FÁCIL
+          </h2>
+
+          <p class="lead text-primary fw-bold mb-4">
+            LA PRIMERA CONSULTA MÉDICA ES GRATIS
+          </p>
+
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <div
+                class="bg-secondary bg-opacity-10 p-4 rounded shadow-lg d-flex justify-content-center align-items-center"
+                style="min-height: 400px"
+              >
+                <div class="row w-100 g-4 align-items-center">
+                  <div class="col-md-6 d-flex justify-content-center">
+                    <img
+                      src="img/imgasectiongendamiento.png"
+                      alt="Cita Confirmada"
+                      class="img-fluid"
+                      style="max-height: 350px"
+                    />
+                  </div>
+
+                  <div class="col-md-6 text-center text-md-start">
+                    <h3 class="text-secondary mb-3">
+                      AGENDA TU CITA EN TIEMPO REAL
+                    </h3>
+                    <h1 class="display-6 fw-bold text-dark">¡ESTAMOS LISTOS</h1>
+                    <h1 class="display-6 fw-bold text-dark mb-0">
+                      Y PREPARADOS PARA ATENDER A TU MASCOTA!
+                    </h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a href="login.html" class="btn btn-warning btn-lg fw-bold mt-4 mb-5"
+            >PROGRAMAR UNA CONSULTA MÉDICA</a
+          >
+
+          <p class="text-muted small mt-4">
+            La primera consulta médica gratis es válida de lunes a viernes en
+            horario diurno. <br />
+            El primer baño gratis solo aplica en la sede principal de lunes a
+            viernes en horario diurno.
+          </p>
+        </div>
+      </section>
+      <!-- Fin Sección de Agendamiento -->
+
+      <!-- Sección de Servicios -->
+      <section class="py-5">
+        <div class="container my-5">
+          <div class="row align-items-start">
+            <div class="col-md-5 col-lg-5 mb-5 mb-md-0">
+              <div class="text-center text-md-start mb-4">
+                <img
+                  src="img/imgServicios2.jpg"
+                  alt="Premios PetIndustry"
+                  class="img-fluid mx-auto d-block shadow-lg rounded"
+                  style="
+                    max-width: 300px;
+                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+                  "
+                />
+              </div>
+
+              <h2 class="text-uppercase text-muted fw-normal mb-4">
+                NUESTROS SERVICIOS
+              </h2>
+
+              <p class="lead text-secondary">
+                Somos un nuevo concepto en servicios médicos veterinarios
+                enfocado en mejorar la calidad de vida de nuestras mascotas.
+                CliniCan ofrece los más altos estándares de calidad en medicina
+                veterinaria disponibles en el país, un grupo de profesionales
+                médicos veterinarios especializados, con instalaciones y equipos
+                de última generación.
+              </p>
+
+              <a href="login.html" class="btn btn-warning btn-lg fw-bold mt-4"
+                >AGENDA TUS SERVICIOS</a
+              >
+            </div>
+
+            <div class="col-md-7 col-lg-7">
+              <div class="row row-cols-md-2 g-5 pt-3">
+                <div class="col mb-4">
+                  <div class="d-flex align-items-center">
+                    <i
+                      class="fas fa-stethoscope icon-grande me-3 text-secondary"
+                    ></i>
+                    <h5 class="mb-0">CONSULTA MÉDICA</h5>
+                  </div>
+                </div>
+
+                <div class="col mb-4">
+                  <div class="d-flex align-items-center">
+                    <i
+                      class="fas fa-desktop icon-grande me-3 text-secondary"
+                    ></i>
+                    <h5 class="mb-0">ECOGRAFÍA</h5>
+                  </div>
+                </div>
+
+                <div class="col mb-4">
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-cut icon-grande me-3 text-secondary"></i>
+                    <h5 class="mb-0">PELUQUERIA</h5>
+                  </div>
+                </div>
+
+                <div class="col mb-4">
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-tint icon-grande me-3 text-secondary"></i>
+                    <h5 class="mb-0">LABORATORIO CLÍNICO</h5>
+                  </div>
+                </div>
+
+                <div class="col mb-4">
+                  <div class="d-flex align-items-center">
+                    <i
+                      class="fas fa-syringe icon-grande me-3 text-secondary"
+                    ></i>
+                    <h5 class="mb-0">VACUNACIÓN</h5>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-x-ray icon-grande me-3 text-secondary"></i>
+                    <h5 class="mb-0">RAYOS X</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Fin Sección de Servicios -->
+
+      <!-- Sección de Blog -->
+      <section class="blog-section">
+        <div class="container">
+          <!-- Encabezado de la sección -->
+          <div class="text-center mb-5">
+            <p class="section-subtitle text-uppercase">
+              PUBLICACIONES DE INTERÉS PARA TU MASCOTA
+            </p>
+            <h2 class="section-title">BLOG</h2>
+            <div class="title-underline"></div>
+          </div>
+
+          <!-- Tarjetas de Blog -->
+          <div class="row g-4">
+            <!-- Tarjeta 1 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="blog-card">
+                <img
+                  src="https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=600&h=400&fit=crop"
+                  alt="Otitis en perros"
+                  class="blog-card-img"
+                />
+                <div class="blog-card-body">
+                  <h3 class="blog-card-title">OTITIS EN PERROS</h3>
+                  <p class="blog-card-text">
+                    Otitis en perros: su mascota puede padecerlo. Escrito por:
+                    Dr. Sebastián Gómez La otitis canina...
+                  </p>
+                </div>
+                <div class="blog-card-footer">
+                  <span class="blog-author">BY CLINICAN</span>
+                  <span class="blog-date">02 OCTOBER 2024</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="blog-card">
+                <img
+                  src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600&h=400&fit=crop"
+                  alt="Desparasitación"
+                  class="blog-card-img"
+                />
+                <div class="blog-card-body">
+                  <h3 class="blog-card-title">
+                    Desparasitación de mascotas; todo lo que debes saber
+                  </h3>
+                  <p class="blog-card-text">
+                    Desparasitación de tu mascota: muchas veces no le damos la
+                    importancia hasta no ver los...
+                  </p>
+                </div>
+                <div class="blog-card-footer">
+                  <span class="blog-author">BY CLINICAN</span>
+                  <span class="blog-date">02 OCTOBER 2024</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="col-md-6 col-lg-4">
+              <div class="blog-card">
+                <img
+                  src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&h=400&fit=crop"
+                  alt="Vacunación"
+                  class="blog-card-img"
+                />
+                <div class="blog-card-body">
+                  <h3 class="blog-card-title">
+                    Vacunación de mascotas: Prevención de enfermedades mortales
+                  </h3>
+                  <p class="blog-card-text">
+                    Vacunación de mascotas: Prevención de enfermedades mortales
+                    Protege a tu familia y a tu mascota...
+                  </p>
+                </div>
+                <div class="blog-card-footer">
+                  <span class="blog-author">BY CLINICAN</span>
+                  <span class="blog-date">02 OCTOBER 2024</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Fin Sección de Blog -->
+    </div>
+    <!-- Fin Contenedor principal -->
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <!-- COLUMNA 1: Quiénes Somos -->
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="footer-title">Quiénes Somos</h5>
+            <p class="footer-text">
+              CliniCan Clínica Veterinaria es un centro especializado en el
+              cuidado integral de tu mascota. Contamos con más de 10 años de
+              experiencia y profesionales certificados.
+            </p>
+            <div class="social-links mt-3">
+              <a href="https://facebook.com" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://wa.me/573041234567" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- COLUMNA 2: Enlaces Rápidos -->
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="footer-title">Enlaces Rápidos</h5>
+            <a href="#inicio" class="footer-link">→ Inicio</a>
+            <a href="#servicios" class="footer-link">→ Servicios</a>
+            <a href="#blog" class="footer-link">→ Blog</a>
+            <a href="#citas" class="footer-link">→ Citas Médicas</a>
+            <a href="#contacto" class="footer-link">→ Contacto</a>
+          </div>
+
+          <!-- COLUMNA 3: Información de Contacto -->
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="footer-title">Contacto</h5>
+            <div class="contact-info">
+              <p>
+                <i class="fas fa-map-marker-alt"></i>
+                <strong>Dirección:</strong><br />
+                <span class="ms-4"
+                  >Calle 107 #45-23<br />Medellín, Antioquia</span
+                >
+              </p>
+              <p>
+                <i class="fas fa-phone"></i>
+                <strong>Teléfono:</strong><br />
+                <span class="ms-4">+57 304 123 4567</span>
+              </p>
+              <p>
+                <i class="fas fa-envelope"></i>
+                <strong>Email:</strong><br />
+                <span class="ms-4">info@petplusclinica.com</span>
+              </p>
+              <p>
+                <i class="fas fa-clock"></i>
+                <strong>Horario:</strong><br />
+                <span class="ms-4"
+                  >Lun - Vie: 8:00 - 18:00<br />Sáb: 9:00 - 14:00</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <!-- COLUMNA 4: Mapa de Ubicación -->
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="footer-title">Nuestra Ubicación</h5>
+            <div id="map"></div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=6.2476,-75.5658"
+              target="_blank"
+              class="btn btn-warning btn-sm mt-3 w-100"
+            >
+              <i class="fas fa-directions"></i> Cómo Llegar
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="footer-bottom">
+        <div class="container">
+          <p>
+            &copy; 2025 CliniCan Clínica Veterinaria. Todos los derechos
+            reservados. | Diseñado con ❤️
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- Fin FOOTER -->
+
+    
+    <!--Mapa de ubicaciones-->
+
+    <!-- Leaflet JS Mapa de ubicación-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    
+
+    <script>
+      // ========================================
+      // CONFIGURACIÓN DEL MAPA
+      // ========================================
+
+      // 1. CAMBIA ESTAS COORDENADAS
+      const latitud = 6.2476; //  latitud
+      const longitud = -75.5658; //  longitud
+      const zoom = 14; // Nivel de zoom (10-18)
+
+      // 2. Inicializar el mapa
+      const map = L.map("map").setView([latitud, longitud], zoom);
+
+      // 3. Agregar capa del mapa (OpenStreetMap)
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap contributors",
+      }).addTo(map);
+
+      // 4. Agregar marcador en tu ubicación
+      const marker = L.marker([latitud, longitud]).addTo(map);
+
+      // 5. Agregar popup al marcador
+      marker
+        .bindPopup(
+          `
+            <div style="text-align: center;">
+                <strong>🏥 CliniCan </strong><br>
+                Calle 107 #45-23<br>
+                Medellín, Antioquia<br>
+                <a href="https://www.google.com/maps/search/?api=1&query=${latitud},${longitud}" 
+                   target="_blank" 
+                   style="color: #2d5f3f; font-weight: bold;">
+                    Ver en Google Maps →
+                </a>
+            </div>
+        `
+        )
+        .openPopup();
+    </script>
+
+    <!-- Botón Top-->
+    <button class="back-to-top btn-style-6" id="backToTop">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript Botón Top-->
+    <script>
+      const btn = document.getElementById("backToTop");
+
+      window.addEventListener("scroll", () => {
+        btn.classList.toggle("show", window.pageYOffset > 300);
+      });
+
+      btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    </script>
+    
+
+    <script src="Animacion_boos.js"></script>
+  </body>
+</html>
