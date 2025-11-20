@@ -8,6 +8,24 @@ body {
     height: 50%;
 }
 
+/* +++++++++++++++++++++++++++++++++++++++++*/
+/* ESTOLOS DE LAS FUNTES */
+
+ * {
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Para títulos más impactantes */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+    }
+    
+    /* Para textos normales */
+    body, p, span {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
+    }
 
 /* Estilos para el header y la barra de navegación */
 header .navbar {
